@@ -1,0 +1,28 @@
+.footer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	min-height: 110px;
+	background-image: url("/images/Footer_BG.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 10px 20px;
+	font-size: 18px;
+	/* position: absolute;
+  bottom: 0;
+	width: 100%; */
+}
+
+.iconWithText {
+	display: flex;
+	align-items: center;
+}
+
+.texts {
+	padding-left: 10px;
+}
+
+.copyright {
+	text-align: center;
+}

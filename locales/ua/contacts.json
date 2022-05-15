@@ -1,0 +1,9 @@
+{
+	"contacts": "Контакти",
+	"workTime": "Ми працюємо з {{from}} до {{till}}",
+	"mapPlace": "м. Харків, пр. Людвіга Свободи, 58",
+	"phone": "Контактний телефон: \n{{phone}}",
+	"mail": "Написати нам на пошту: \n{{email}}",
+	"embedMap": "ua",
+	"shareMap": "https://goo.gl/maps/PFcEgiCt9Rp6d4ZK8"
+}

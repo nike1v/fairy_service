@@ -1,0 +1,51 @@
+.servicesContainer {
+	margin: 30px;
+}
+
+.servicesBlock {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.servicesNames {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 36px;
+	line-height: 46px;
+	margin-left: 40px;
+	justify-content: center;
+}
+
+.servicesNames * {
+	margin: 25px 0px;
+}
+
+.servicesNames span:hover {
+	color: #FFB800;
+	cursor: pointer;
+}
+
+.servicesPhotos {
+	display: flex;
+	flex-direction: column;
+	margin-left: 80px;
+	filter: grayscale(1) brightness(40%);
+}
+
+.activeService {
+	filter: none;
+	clip-path: polygon(50% 50%,  50% 50%,  50% 50%, 50% 50%);
+	transition: clip-path 0.5s;
+}
+
+.servicesPhotos > div {
+	display: flex;
+}
+
+.servicesPhotos > div > div {
+	/* display: table-cell; */
+	margin: 5px;
+}

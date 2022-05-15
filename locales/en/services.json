@@ -1,0 +1,20 @@
+{
+	"massage": "Massage",
+	"nails": "Manicure",
+	"cosmetology": "Cosmetology",
+	"hair": "Hair",
+	"serviceButton": "Sign up",
+	"serviceNameMassage": "Massage",
+	"serviceLyricMassage": "",
+	"serviceDescriptionMassage": "",
+	"serviceNameNails": "Manicure",
+	"serviceLyricNails": "There are no well-groomed hands without good nails. \nBeautiful hands are signs of a real lady ... (E. Bear)",
+	"serviceDescriptionNails": "Types of manicure in our salon:",
+	"serviceDescriptionListNails": "Hardware, Classic, Combined, European",
+	"serviceNameCosmetology": "Cosmetology",
+	"serviceLyricCosmetology": "",
+	"serviceDescriptionCosmetology": "",
+	"serviceNameHair": "Hair",
+	"serviceLyricHair": "",
+	"serviceDescriptionHair": ""
+}

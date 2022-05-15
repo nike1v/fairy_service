@@ -1,0 +1,58 @@
+.newsContainer {
+	margin: 50px 30px 0px 30px;
+  padding-bottom: 75px;
+}
+
+.newsBlock {
+	display: flex;
+}
+
+.newsImage {
+	margin: 0px 20px;
+	flex: 1;
+}
+
+.detailsTexts {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.detailsDate {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 23px;
+	margin-bottom: 55px;
+}
+
+.detailsHeader {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 48px;
+	line-height: 61px;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.detailsDescription {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 23px;
+}
+
+.detailsButton {
+	margin: 35px 0px;
+	text-align: right;
+}
+
+.detailsButton a {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 31px;
+	box-sizing: border-box;
+	border: 1px solid #000000;
+	padding: 10px 45px;
+}

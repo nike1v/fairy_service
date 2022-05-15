@@ -1,0 +1,45 @@
+{
+  "locales": [
+    "en",
+    "ua"
+  ],
+  "defaultLocale": "ua",
+  "pages": {
+    "*": [
+      "common"
+    ],
+    "/": [
+      "home"
+    ],
+    "/news": [
+      "news"
+    ],
+    "/services": [
+      "services"
+    ],
+    "/services/[name]": [
+      "services"
+    ],
+    "/about": [
+      "about"
+    ],
+    "/contacts": [
+      "contacts"
+    ],
+    "/staff": [
+      "staff"
+    ],
+    "/staff/[id]": [
+      "staff"
+    ],
+    "/login": [
+      "auth"
+    ],
+    "/registration": [
+      "auth"
+    ],
+    "/cabinet": [
+      "user"
+    ]
+  }
+}

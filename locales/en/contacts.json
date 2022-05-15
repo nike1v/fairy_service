@@ -1,0 +1,9 @@
+{
+	"contacts": "Contacts",
+	"workTime": "We work from {{from}} to {{till}}",
+	"mapPlace": "Lyudviha Svobody Ave, 58, Kharkiv",
+	"phone": "Contact phone: \n{{phone}}",
+	"mail": "Write to us by mail: \n{{email}}",
+	"embedMap": "en",
+	"shareMap": "https://goo.gl/maps/fJWNEa55wcFK2tkPA"
+}

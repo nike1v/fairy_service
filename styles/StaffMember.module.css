@@ -1,0 +1,76 @@
+.container {
+	margin: 30px;
+	display: flex;
+}
+
+.staffPhoto {
+	padding: 20px;
+	flex: 1;
+}
+
+.staffDescr {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	margin: 20px 0px;
+}
+
+.staffName {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 36px;
+	line-height: 46px;
+	text-align: center;
+	margin-bottom: 2%;
+}
+
+.staffJob {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 31px;
+	text-align: center;
+	margin-bottom: 5%;
+}
+
+.staffTeam {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 23px;
+	margin-bottom: 14%;
+}
+
+.staffExp {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 23px;
+	margin-bottom: 5%;
+}
+
+.staffButtons {
+	display: flex;
+	justify-content: space-between;
+}
+
+.staffCertificates {
+	background: #D8C7B5;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 23px;
+	white-space: pre-wrap;
+	padding: 5px 25px;
+}
+
+.staffSignUp {
+	background: #D8C7B5;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 50px;
+	padding: 5px 25px;
+}

@@ -1,0 +1,61 @@
+.container {
+	margin: 30px;
+}
+
+.block {
+	display: flex;
+}
+
+.contactsHeader {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 48px;
+	line-height: 61px;
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+.mapBlock {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.descr {
+	flex: 1;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 23px;
+	padding-left: 40px;
+	white-space: pre-wrap;
+}
+
+.workTime {
+	margin-bottom: 5%;
+}
+
+.address {
+	margin-bottom: 5%;
+}
+
+.phone {
+	line-height: 30px;
+	margin-bottom: 5%;
+}
+
+.mail {
+	line-height: 30px;
+	margin-bottom: 5%;
+}
+
+.line  {
+	margin: 20px 30px;
+	border-bottom: 1px solid #D8C7B5;
+}
+
+.socialMedia * {
+	border-radius: 10px;
+	padding-right: 30px;
+}

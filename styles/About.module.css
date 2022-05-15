@@ -1,0 +1,55 @@
+.container {
+	display: flex;
+	margin: 30px;
+}
+
+.imagesBlock {
+	min-height: 580px;
+	flex: 10;
+	margin: 0px 30px;
+	position: relative;
+}
+.imageOne {
+	z-index: 1;
+	position: absolute;
+	top: 25px;
+	left: 35px;
+}
+
+.imageTwo {
+	z-index: 2;
+	position: absolute;
+	top: 320px;
+	left: 190px;
+}
+
+.aboutBlock {
+	flex: 10;
+	margin: 0px 30px;
+}
+
+.aboutHeader {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 48px;
+	line-height: 61px;
+	text-align: center;
+	margin-bottom: 40px; 
+}
+
+.aboutDescr {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 42px;
+	padding: 0px 20px;
+	text-indent: 20px;
+}
+
+.lineVertical {
+	/* flex: 1; */
+	width: 3px;
+	min-height: 100%;
+	margin: 5px 2px;
+	border-right: 1px solid #D8C7B5;
+}

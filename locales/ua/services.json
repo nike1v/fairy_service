@@ -1,0 +1,20 @@
+{
+	"massage": "Масаж",
+	"nails": "Манікюр",
+	"cosmetology": "Косметологія",
+	"hair": "Волосся",
+	"serviceButton": "Записатись",
+	"serviceNameMassage": "Масаж",
+	"serviceLyricMassage": "",
+	"serviceDescriptionMassage": "",
+	"serviceNameNails": "Манікюр",
+	"serviceLyricNails": "Без гарних нігтів немає доглянутих рук. \nКрасиві руки  ознакии справжньої леді... (Е.Беар)",
+	"serviceDescriptionNails": "Види манікюра в нашому салоні:",
+	"serviceDescriptionListNails": "Апаратний, Класичний, Комбінований, Европейський",
+	"serviceNameCosmetology": "Косметологія",
+	"serviceLyricCosmetology": "",
+	"serviceDescriptionCosmetology": "",
+	"serviceNameHair": "Волосся",
+	"serviceLyricHair": "",
+	"serviceDescriptionHair": ""
+}

@@ -1,0 +1,55 @@
+.container {
+	margin: 30px;
+}
+
+.header {
+	background-image: url("/images/staff_header_bg.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	width: 470px;
+	height: 80px;
+	text-align: center;
+	margin: auto;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 36px;
+	line-height: 80px;
+	margin-bottom: 40px;
+}
+
+.staffGrid {
+	display: flex;
+	flex-direction: column;
+}
+
+.staffLineOne {
+	display: flex;
+	justify-content: space-evenly;
+	margin-bottom: 5%;
+}
+
+.staffLineOne div {
+	display: flex;
+	flex-direction: column;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 23px;
+	cursor: pointer;
+}
+
+.staffLineTwo {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.staffLineTwo div {
+	display: flex;
+	flex-direction: column;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 23px;
+	cursor: pointer;
+}
