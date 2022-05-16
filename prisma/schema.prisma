@@ -8,11 +8,11 @@ datasource db {
 }
 
 model clients {
-  clientId        Int       @id @default(autoincrement())
+  clientId        Int       @id @default(autoincrement()) @unique
   firstName     String      @db.VarChar(250)
   lastName      String      @db.VarChar(250)
-  email         String      @db.VarChar(250)
-  phone         String      @db.VarChar(250)
+  email         String      @db.VarChar(250) @unique
+  phone         String      @db.VarChar(250) @unique
   password      String      @db.VarChar(250)
   isActive      String      @default("1") @db.Char(1)
   registeredAt  DateTime   	@default(now())
