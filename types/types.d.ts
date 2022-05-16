@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import { FieldError } from "react-hook-form";
 
 type Inputs = {
@@ -31,4 +32,9 @@ type UserAccountType = {
 	email?: string;
 	phone?: string;
 	isActive?: string;
+	admin: boolean;
+}
+
+declare global {
+	var db: PrismaClient<Prisma.PrismaClientOptions, never, Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>;
 }
