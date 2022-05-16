@@ -24,23 +24,17 @@ const configuration = {
     secure: process.env.NODE_ENV && process.env.NODE_ENV === "production",
   },
   session: {
-    jwt: true,
+    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60
+  },
+  jwt: {
+    secret: process.env.NEXT_JWT_SECRET
   },
   providers: [
     CredentialsProvider({
       id: "credentials",
       name: "E-mail",
-      credentials: {
-        email: {
-          "type": "email",
-          "label": "E-mail"
-        },
-        password: {
-          "label": "Password",
-          "type": "password"
-        }
-      },
+      credentials: {},
       async authorize(credentials: any): Promise<any> {
         try {
           const user = await prisma.clients.findFirst({
@@ -135,8 +129,7 @@ const configuration = {
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }: DefaultJWT) {
-      console.log("JWT callback. Got User: ", user);
-      if (typeof user !== typeof undefined) {
+      if (user) {
         token.user = user;
       }
       return token;

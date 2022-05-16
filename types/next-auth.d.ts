@@ -28,5 +28,6 @@ declare module "next-auth/react" {
 declare module "next-auth/jwt" {
 	interface DefaultJWT {
 		token: JWT,
+		user: User
 	}
 }
