@@ -18,4 +18,31 @@ model clients {
   registeredAt  DateTime   	@default(now())
   expires				DateTime   	@default(now())
   admin         Boolean     @default(false)
+  orders        orders[]
+}
+
+model services {
+  serviceId     Int         @id @default(autoincrement()) @unique
+  title         String      @db.VarChar(250) @unique
+  staffs        staff[]
+  orders        orders[]
+}
+
+model staff {
+  staffId       Int         @id @default(autoincrement()) @unique
+  firstName     String      @db.VarChar(250)
+  service       services    @relation(fields: [serviceId], references: [serviceId])
+  serviceId     Int
+  orders        orders[]
+}
+
+model orders {
+  odrderId      Int         @id @default(autoincrement()) @unique
+  date          DateTime    @default(now())
+  serviceId     Int
+  staffId       Int
+  clientId      Int
+  client        clients     @relation(fields: [clientId], references: [clientId])
+  service       services    @relation(fields: [serviceId], references: [serviceId])
+  staff         staff       @relation(fields: [staffId], references: [staffId]) 
 }
