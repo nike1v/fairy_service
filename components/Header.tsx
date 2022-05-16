@@ -10,18 +10,20 @@ import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import Script from "next/script";
+import { useSession } from "next-auth/react";
 
+import restricted from "../pages/api/restricted";
 import SocialIcon from "./SocialIcon";
 
 import styles from "../styles/Header.module.css";
-import Script from "next/script";
 
 const Header: NextPage = () => {
   const { t, lang } = useTranslation("common");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const { asPath } = useRouter();
-
+  const { data: session, status } = useSession();
 
   return (
     <header className={styles.Header}>
@@ -34,7 +36,6 @@ const Header: NextPage = () => {
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"/>
         <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"/>
         <link href="/dist/output.css" rel="stylesheet"></link>
-
       </Head>
 
       <div className={styles.topBar}>
@@ -109,7 +110,7 @@ const Header: NextPage = () => {
           </Link>
         </div>
         {
-          isLoggedIn ? (
+          status === "authenticated" ? (
             <div className={styles.userCabinet}>
               <Link href="/cabinet">
                 <a className={asPath.startsWith("/cabinet") ? `${styles.active}` : ""}>{t("userCabinet")}</a>

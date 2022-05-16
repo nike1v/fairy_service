@@ -32,6 +32,7 @@
 	font-size: 16px;
 	line-height: 20px;
 	margin-top: 3%;
+	cursor: pointer;
 }
 
 .loginForm > div {
@@ -47,5 +48,5 @@
 	line-height: 23px;
 	text-align: center;
 	text-decoration-line: underline;
-	color: #FFB800;;
+	color: #FFB800;
 }

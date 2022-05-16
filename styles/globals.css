@@ -21,5 +21,9 @@ a {
 
 #container {
   position: relative;
-  min-height: 100vh;
+}
+
+main {
+  min-height: 50vh;
+  height: 100%;
 }

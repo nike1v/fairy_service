@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 
 const restricted = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
+  console.log(session);
   if (session) {
     res.send({
       content:

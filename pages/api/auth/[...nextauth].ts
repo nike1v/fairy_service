@@ -1,10 +1,13 @@
-import NextAuth, { Session } from "next-auth";
+import NextAuth, { Account, Profile, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import * as bcrypt from "bcrypt";
+import { DefaultJWT, JWT, JWTOptions } from "next-auth/jwt";
+
 import { UserAccountType } from "../../../types/types";
-import { JWT } from "next-auth/jwt";
-import { SessionStore } from "next-auth/core/lib/cookie";
+import { NextApiRequest, NextApiResponse } from "next";
+import { SessionContextValue, SignInOptions } from "next-auth/react";
+
 let userAccount: UserAccountType;
 const prisma = new PrismaClient();
 
@@ -28,7 +31,16 @@ const configuration = {
     CredentialsProvider({
       id: "credentials",
       name: "E-mail",
-      credentials: {},
+      credentials: {
+        email: {
+          "type": "email",
+          "label": "E-mail"
+        },
+        password: {
+          "label": "Password",
+          "type": "password"
+        }
+      },
       async authorize(credentials: any): Promise<any> {
         try {
           const user = await prisma.clients.findFirst({
@@ -67,10 +79,8 @@ const configuration = {
     }),
   ],
   callbacks: {
-    async signIn(user: any, account: any, profile: any) {
+    async signIn({ user, account, profile, email, credentials }: SignInOptions) {
       try {
-        //the user object is wrapped in another user object so extract it
-        user = user.user;
         console.log("Sign in callback", user);
         console.log("User id: ", user.clientId);
         if (typeof user.clientId !== typeof undefined) {
@@ -108,22 +118,23 @@ const configuration = {
       }
 
     },
-    async session(session: any, token: JWT) {
-      if (userAccount !== null) {
-        //session.user = userAccount;
-        session.user = {
-          userId: userAccount.clientId,
-          name: `${userAccount.firstName} ${userAccount.lastName}`,
-          email: userAccount.email
-        };
-      } else if (typeof token.user !== typeof undefined && (typeof session.user === typeof undefined || (typeof session.user !== typeof undefined && typeof session.user.userId === typeof undefined))) {
-        session.user = token.user;
-      } else if (typeof token !== typeof undefined) {
-        session.token = token;
-      }
+    async session({session, token, user}: Session) {
+      session.accessToken = token.accessToken;
+      // if (userAccount !== null) {
+      //   //session.user = userAccount;
+      //   session.user = {
+      //     userId: userAccount.clientId,
+      //     name: `${userAccount.firstName} ${userAccount.lastName}`,
+      //     email: userAccount.email
+      //   };
+      // } else if (typeof token.user !== typeof undefined && (typeof session.user === typeof undefined || (typeof session.user !== typeof undefined && typeof session.user.userId === typeof undefined))) {
+      //   session.user = token.user;
+      // } else if (typeof token !== typeof undefined) {
+      //   session.token = token;
+      // }
       return session;
     },
-    async jwt(token: JWT, user: any, account: any, profile: any, isNewUser: any) {
+    async jwt({ token, user, account, profile, isNewUser }: DefaultJWT) {
       console.log("JWT callback. Got User: ", user);
       if (typeof user !== typeof undefined) {
         token.user = user;
@@ -133,6 +144,6 @@ const configuration = {
   }
 };
 
-const index = (req: any, res: any) => NextAuth({...req, ...res, ...configuration});
+const index = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, configuration);
 
 export default index;
