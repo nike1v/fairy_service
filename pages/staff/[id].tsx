@@ -39,6 +39,27 @@ interface Props {
 const Home: NextPage<Props> = ({ params }) => {
   const { t } = useTranslation("staff");
 
+  const certificateHandler = () => {
+    switch (params.id) {
+    case "5":
+      return "https://drive.google.com/file/d/1SNVK2kAZW0sH-JDqv-yakjNh94834sOy/view?usp=sharing";
+
+    case "2":
+    case "4":
+      return "https://drive.google.com/file/d/1iGGTKGA4u8HMPq0xunGJqH3K_RQKmNDw/view?usp=sharing";
+
+    case "1":
+      return "https://drive.google.com/file/d/1aNGIS5H7tAZS4C1lRQnoibGxAZqVf35M/view?usp=sharing";
+
+    case "3":
+    case "6":
+      return "https://drive.google.com/file/d/1-z1Hp53eozVugim_hqSpCVgTU-uTQK1a/view?usp=sharing";
+    
+    default:
+      return "/";
+    }
+  };
+
   return (
     <Context>
       <main className={styles.container}>
@@ -60,9 +81,7 @@ const Home: NextPage<Props> = ({ params }) => {
           </div>
           <div className={styles.staffButtons}>
             <div className={styles.staffCertificates}>
-              <Link href={"/"}>
-                <a>{t("staffCertificates")}</a>
-              </Link>
+              <a href={certificateHandler()} target="_blank" rel="noreferrer" >{t("staffCertificates")}</a>
             </div>
             <div className={styles.staffSignUp}>
               <Link href={"/services"}>

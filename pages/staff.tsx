@@ -36,17 +36,17 @@ const Home: NextPage = () => {
             <Link href={"/staff/2"}>
               <div>
                 <Image src={"/images/staff_2.png"} width={200} height={170} alt={"staff"} />
-                {t("masterOneName")}
+                {t("masterTwoName")}
                 <br />
-                {t("masterOneJob")}
+                {t("masterTwoJob")}
               </div>
             </Link>
             <Link href={"/staff/3"}>
               <div>
                 <Image src={"/images/staff_3.png"} width={200} height={170} alt={"staff"} />
-                {t("masterOneName")}
+                {t("masterThreeName")}
                 <br />
-                {t("masterOneJob")}
+                {t("masterThreeJob")}
               </div>
             </Link>
           </div>
@@ -54,25 +54,25 @@ const Home: NextPage = () => {
             <Link href={"/staff/4"}>
               <div>
                 <Image src={"/images/staff_4.png"} width={200} height={170} alt={"staff"} />
-                {t("masterOneName")}
+                {t("masterFourName")}
                 <br />
-                {t("masterOneJob")}
+                {t("masterFourJob")}
               </div>
             </Link>
             <Link href={"/staff/5"}>
               <div>
                 <Image src={"/images/staff_5.png"} width={200} height={170} alt={"staff"} />
-                {t("masterOneName")}
+                {t("masterFiveName")}
                 <br />
-                {t("masterOneJob")}
+                {t("masterFiveJob")}
               </div>
             </Link>
             <Link href={"/staff/6"}>
               <div>
                 <Image src={"/images/staff_6.png"} width={200} height={170} alt={"staff"} />
-                {t("masterOneName")}
+                {t("masterSixName")}
                 <br />
-                {t("masterOneJob")}
+                {t("masterSixJob")}
               </div>
             </Link>
           </div>

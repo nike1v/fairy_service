@@ -1,20 +1,39 @@
 import { NextPage } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Trans from "next-translate/Trans";
-import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Context from "../components";
 import styles from "../styles/Register.module.css";
 import FormField from "../components/FormField";
 import { Inputs } from "../types/types";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 const Login: NextPage = () => {
+  const router = useRouter();
   const { t } = useTranslation("auth");
   const { register, handleSubmit, formState: { errors }, watch } = useForm<Inputs>({
     criteriaMode: "all",
     mode: "onBlur"
   });
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+
+  const registerUser = async (data: Inputs) => {       
+    await axios.post("/api/register", data);
+    try {
+      const result: any = await signIn("credentials", {
+        email: data.email, password: data.password, callbackUrl: `${window.location.origin}`, redirect: false }
+      );
+      console.log(result);
+      if (result) {
+        router.push(result.url);
+      }
+    } catch (error: any) {
+      alert("Failed to register: " + error.toString());
+    }
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = data => registerUser(data);
 
   return (
     <Context>
@@ -45,12 +64,12 @@ const Login: NextPage = () => {
                     i18nKey="auth:checkboxText" 
                     components={
                       [
-                        (<Link href="/login" key="fairyRules">
-                          <a />
-                        </Link>),
-                        (<Link href="/login" key="personalDataAgreement">
-                          <a />
-                        </Link>)
+                        (
+                          <a target={"_blank"} href={"https://drive.google.com/file/d/1GMdic85OB6-a7_oaRC0jJGPzTTOAeodX/view?usp=sharing"} key="fairyRules" rel="noopener noreferrer"  />
+                        ),
+                        (
+                          <a target={"_blank"} href={"https://drive.google.com/file/d/1GMdic85OB6-a7_oaRC0jJGPzTTOAeodX/view?usp=sharing"} key="userDataUse" rel="noopener noreferrer"  />
+                        )
                       ]
                     } 
                   />

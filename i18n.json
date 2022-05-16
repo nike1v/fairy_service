@@ -38,6 +38,9 @@
     "/registration": [
       "auth"
     ],
+    "/forgot-password": [
+      "auth"
+    ],
     "/cabinet": [
       "user"
     ]

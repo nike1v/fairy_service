@@ -16,7 +16,8 @@
 .loginForm {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	width: 100%;
+	padding: 0px 30%;
 }
 
 .loginButton {
@@ -35,4 +36,16 @@
 
 .loginForm > div {
 	min-width: 250px;
+}
+
+.additionalButtons {
+	display: flex;
+	margin-top: 3%;
+	justify-content: space-between;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 23px;
+	text-align: center;
+	text-decoration-line: underline;
+	color: #FFB800;;
 }

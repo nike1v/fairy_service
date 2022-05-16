@@ -14,7 +14,7 @@ const Footer: NextPage = () => {
       </div>
       <div className={styles.iconWithText}>
         <Image src={"/images/clock.png"} alt={"Working time"} width={25} height={25} />
-        <span className={styles.texts}>9.00 - 21-00</span>
+        <span className={styles.texts}>9.00 - 21.00</span>
       </div>
       <div className={styles.copyright}>
 				&copy; 2022 {t("copyright")}

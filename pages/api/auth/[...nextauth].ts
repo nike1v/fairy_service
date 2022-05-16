@@ -1,39 +1,164 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaClient } from "@prisma/client";
+import * as bcrypt from "bcrypt";
+import { UserAccountType } from "../../../types/types";
+import { JWT } from "next-auth/jwt";
+let userAccount: UserAccountType;
+const prisma = new PrismaClient();
 
-export default NextAuth({
+const confirmPasswordHash = (plainPassword: string, hashedPassword: string) => {
+  return new Promise(resolve => {
+    bcrypt.compare(plainPassword, hashedPassword, function(err, res) {
+      resolve(res);
+    });
+  });
+};
+
+const configuration = {
+  cookie: {
+    secure: process.env.NODE_ENV && process.env.NODE_ENV === "production",
+  },
+  session: {
+    jwt: true,
+    maxAge: 30 * 24 * 60 * 60
+  },
   providers: [
     CredentialsProvider({
+      id: "credentials",
       name: "E-mail",
-      // The credentials is used to generate a suitable form on the sign in page.
-      // You can specify whatever fields you are expecting to be submitted.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
-      credentials: {
-        username: { label: "Username", type: "text", placeholder: "user@gmail.com" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials, req) {
-        // You need to provide your own logic here that takes the credentials
-        // submitted and returns either a object representing a user or value
-        // that is false/null if the credentials are invalid.
-        // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-        // You can also use the `req` object to obtain additional parameters
-        // (i.e., the request IP address)
-        const res = await fetch("/your/endpoint", {
-          method: "POST",
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" }
-        });
-        const user = await res.json();
-  
-        // If no error and we have user data, return it
-        if (res.ok && user) {
-          return user;
+      credentials: {},
+      async authorize(credentials: any): Promise<any> {
+        try
+        {
+          const user = await prisma.clients.findFirst({
+            where: {
+              email: credentials.email
+            }
+          });
+
+          if (user !== null)
+          {
+            //Compare the hash
+            const res = await confirmPasswordHash(credentials.password, user.password);
+            if (res === true)
+            {
+              userAccount = {
+                clientId: user.clientId,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                phone: user.phone,
+                isActive: user.isActive
+              };
+              return userAccount;
+            }
+            else
+            {
+              console.log("Hash not matched logging in");
+              return null;
+            }
+          }
+          else {
+            return null;
+          }
         }
-        // Return null if user data could not be retrieved
-        return null;
+        catch (err)
+        {
+          console.log("Authorize error:", err);
+        }
+
       }
-    })
-  ]
-});
+    }),
+  ],
+  callbacks: {
+    async signIn(user: any, account: any, profile: any) {
+      try
+      {
+        //the user object is wrapped in another user object so extract it
+        user = user.user;
+        console.log("Sign in callback", user);
+        console.log("User id: ", user.clientId);
+        if (typeof user.clientId !== typeof undefined)
+        {
+
+          if (user.isActive === "1")
+          {
+            console.log("User is active");
+            return user;
+          }
+          else
+          {
+            console.log("User is not active");
+            return false;
+          }
+        }
+        else
+        {
+          console.log("User id was undefined");
+          return false;
+        }
+      }
+      catch (err)
+      {
+        console.error("Signin callback error:", err);
+      }
+
+    },
+    async register(firstName: string, lastName: string, email: string, password: string, phone: string) {
+      try
+      {
+        await prisma.clients.create({
+          data: {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            phone: phone
+          }
+        });
+        return true;
+      }
+      catch (err)
+      {
+        console.error("Failed to register user. Error", err);
+        return false;
+      }
+
+    },
+    async session(session: any, token: any) {
+      if (userAccount !== null)
+      {
+        //session.user = userAccount;
+        session.user = {
+          userId: userAccount.clientId,
+          name: `${userAccount.firstName} ${userAccount.lastName}`,
+          email: userAccount.email
+        };
+
+      }
+      else if (typeof token.user !== typeof undefined && (typeof session.user === typeof undefined
+              || (typeof session.user !== typeof undefined && typeof session.user.userId === typeof undefined)))
+      {
+        session.user = token.user;
+      }
+      else if (typeof token !== typeof undefined)
+      {
+        session.token = token;
+      }
+      return session;
+    },
+    async jwt(token: JWT, user: any, account: any, profile: any, isNewUser: any) {
+      console.log("JWT callback. Got User: ", user);
+      if (typeof user !== typeof undefined)
+      {
+        token.user = user;
+      }
+      return token;
+    }
+  }
+};
+
+const index = (req: any, res: any) => NextAuth({...req, ...res, ...configuration});
+
+export default index;

@@ -6,14 +6,37 @@ import Context from "../components";
 import styles from "../styles/Login.module.css";
 import FormField from "../components/FormField";
 import { Inputs } from "../types/types";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Login: NextPage = () => {
+  const router = useRouter();
   const { t } = useTranslation("auth");
   const { register, handleSubmit, formState: { errors }, watch } = useForm<Inputs>({
     criteriaMode: "all",
     mode: "onBlur"
   });
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+
+  const handleLogin = async (data: Inputs) => {
+    try {
+      const result: any = await signIn("credentials", {
+        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/dashboard`, redirect: true }
+      );
+      if (result.error !== null) {
+        if (result.status === 401) {
+          alert("Your username/password combination was incorrect. Please try again");
+        } else {
+          alert(result.error);
+        }
+      } else {
+        router.push(result.url);
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = data => handleLogin(data);
 
   return (
     <Context>
@@ -27,15 +50,16 @@ const Login: NextPage = () => {
           <FormField fieldName="password" register={register} errors={errors} watch={watch} />
 
           <input type="submit" value={t("loginButton")} className={styles.loginButton} />
+          <div className={styles.additionalButtons}>
+            <Link href={"/registration"}>
+              <a className={styles.toRegisterButton}>{t("toRegisterButton")}</a>
+            </Link>
+            <Link href={"/forgot-password"}>
+              <a className={styles.forgotPassword}>{t("forgotPassword")}</a>
+            </Link>
+          </div>
         </form>
-        <div className={styles.additionalButtons}>
-          <Link href={"/register"}>
-            <a className={styles.toRegisterButton}>{t("toRegisterButton")}</a>
-          </Link>
-          <Link href={"/forgot-password"}>
-            <a className={styles.forgotPassword}>{t("forgotPassword")}</a>
-          </Link>
-        </div>
+        
       </main>
     </Context>
   );

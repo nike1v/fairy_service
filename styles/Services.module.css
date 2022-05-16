@@ -32,7 +32,14 @@
 	display: flex;
 	flex-direction: column;
 	margin-left: 80px;
+}
+
+.servicesPhotos img {
 	filter: grayscale(1) brightness(40%);
+}
+
+img.noFilter {
+	filter: none;
 }
 
 .activeService {
@@ -46,6 +53,5 @@
 }
 
 .servicesPhotos > div > div {
-	/* display: table-cell; */
 	margin: 5px;
 }

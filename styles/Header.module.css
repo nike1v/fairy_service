@@ -93,3 +93,15 @@
 	margin: 0px 30px;
 	border-bottom: 1px solid #D8C7B5;
 }
+
+.mainMenu .dropMenu {
+	margin-left: 0px;
+}
+
+.dropMenu:hover {
+	color: #FFB800;
+}
+
+.mainMenu .dropButtons > a {
+	margin: 0px 5px;
+}

@@ -1,38 +1,31 @@
+/* eslint-disable @next/next/no-css-tags */
+/* eslint-disable @next/next/no-sync-scripts */
 import type { NextPage } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { Fragment, useState } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 import SocialIcon from "./SocialIcon";
 
 import styles from "../styles/Header.module.css";
+import Script from "next/script";
 
 const Header: NextPage = () => {
   const { t, lang } = useTranslation("common");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isShown, setIsShown] = useState(false);
   const { asPath } = useRouter();
-
-  const usePersistLocaleCookie = () => {
-    const { locale, defaultLocale } = useRouter();
-	
-    useEffect(persistLocaleCookie, [locale, defaultLocale]);
-    function persistLocaleCookie() {
-      const date = new Date();
-      const expireMs = 100 * 24 * 60 * 60 * 1000; // 100 days
-      date.setTime(date.getTime() + expireMs);
-      document.cookie = `NEXT_LOCALE=${locale};expires=${date.toUTCString()};path=/`;
-
-    }
-  };
-
-  // usePersistLocaleCookie();
 
 
   return (
     <header className={styles.Header}>
+      <Script src="https://kit.fontawesome.com/7ef186bda4.js" crossOrigin="anonymous"></Script>
       <Head>
         <title>{t("headTitle")}</title>
         <meta name="description" content={t("headMeta")} />
@@ -40,6 +33,7 @@ const Header: NextPage = () => {
         <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"/>
         <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"/>
+        <link href="/dist/output.css" rel="stylesheet"></link>
 
       </Head>
 
@@ -67,6 +61,43 @@ const Header: NextPage = () => {
           <Link href={"/services"}>
             <a className={asPath.startsWith("/services") ? `${styles.active}` : ""}>{t("menuServices")}</a>
           </Link>
+          <Menu as="div" className="relative inline-block text-left">
+            <Menu.Button className={styles.dropMenu} as={"a"}>
+              <FontAwesomeIcon icon={faArrowDown} className="ml-2 -mr-1 h-5 w-5 text-black" />
+            </Menu.Button>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className={`absolute right-0 mt-2 divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-30 ${styles.dropButtons}`}>
+                <Menu.Item>
+                  <Link href={"/services/massage"}>
+                    <a>{t("menuDropdownMassage")}</a>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link href={"/services/nails"}>
+                    <a>{t("menuDropdownNails")}</a>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link href={"/services/cosmetology"}>
+                    <a>{t("menuDropdownCosmetology")}</a>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link href={"/services/hair"}>
+                    <a>{t("menuDropdownHair")}</a>
+                  </Link>
+                </Menu.Item>
+              </Menu.Items>
+            </Transition>
+          </Menu>
           <Link href={"/staff"}>
             <a className={asPath.startsWith("/staff") ? `${styles.active}` : ""}>{t("menuStaff")}</a>
           </Link>

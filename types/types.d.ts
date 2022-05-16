@@ -21,3 +21,14 @@ type InputsErrors = {
 }
 
 type fieldName = "firstName" | "lastName" | "email" | "phone" | "password" | "confirmPassword" | "acceptRules";
+
+declare module "*.pdf";
+
+type UserAccountType = {
+	clientId: number;
+	firstName?: string;
+	lastName?: string;
+	email?: string;
+	phone?: string;
+	isActive?: string;
+}

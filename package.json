@@ -11,7 +11,17 @@
   "dependencies": {
     "@fontsource/gabriela": "^4.5.8",
     "@fontsource/roboto": "^4.5.5",
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
+    "@headlessui/react": "^1.6.1",
     "@hookform/error-message": "^2.0.0",
+    "@prisma/client": "^3.14.0",
+    "@types/bcrypt": "^5.0.0",
+    "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
     "next": "12.1.6",
     "next-auth": "^4.3.4",
     "next-translate": "^1.4.0",
@@ -25,8 +35,12 @@
     "@types/react-dom": "18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
+    "autoprefixer": "^10.4.7",
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.6",
+    "postcss": "^8.4.13",
+    "prisma": "^3.14.0",
+    "tailwindcss": "^3.0.24",
     "typescript": "^4.6.4"
   }
 }
