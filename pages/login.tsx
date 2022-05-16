@@ -20,7 +20,7 @@ const Login: NextPage = () => {
   const handleLogin = async (data: Inputs) => {
     try {
       const result: any = await signIn("credentials", {
-        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/dashboard`, redirect: true }
+        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/services`, redirect: true }
       );
       if (result.error !== null) {
         if (result.status === 401) {

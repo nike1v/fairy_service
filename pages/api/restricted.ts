@@ -1,7 +1,7 @@
-import { IncomingMessage } from "http";
+import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 
-const restricted = async (req: IncomingMessage, res: any) => {
+const restricted = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
   if (session) {
     res.send({

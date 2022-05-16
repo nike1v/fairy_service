@@ -2,13 +2,16 @@ import { NextPage } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Trans from "next-translate/Trans";
 import { useForm, SubmitHandler } from "react-hook-form";
-import Context from "../components";
-import styles from "../styles/Register.module.css";
-import FormField from "../components/FormField";
-import { Inputs } from "../types/types";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+
+import Context from "../components";
+import FormField from "../components/FormField";
+
+import { Inputs } from "../types/types";
+
+import styles from "../styles/Register.module.css";
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -22,7 +25,7 @@ const Login: NextPage = () => {
     await axios.post("/api/register", data);
     try {
       const result: any = await signIn("credentials", {
-        email: data.email, password: data.password, callbackUrl: `${window.location.origin}`, redirect: false }
+        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/services`, redirect: true }
       );
       console.log(result);
       if (result) {

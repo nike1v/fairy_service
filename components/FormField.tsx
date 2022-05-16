@@ -98,11 +98,7 @@ const registerOptions = (t: Translate, validate: any): {[k: string]: any} => ({
 const FormField: NextPage<Props> = ({ fieldName, register, errors, watch }) => {
   const { t } = useTranslation("auth");
 
-  const validate = (value: any) => {
-    console.log(value);
-    console.log(watch("password"));
-    return value === watch("password") || t("confirmPasswordValidate");
-  };
+  const validate = (value: any) => value === watch("password") || t("confirmPasswordValidate");
 
   const inputType = () => {
     switch (fieldName) {
