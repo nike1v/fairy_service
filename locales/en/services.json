@@ -6,15 +6,18 @@
 	"serviceButton": "Sign up",
 	"serviceNameMassage": "Massage",
 	"serviceLyricMassage": "",
-	"serviceDescriptionMassage": "",
+	"serviceDescriptionMassage": "Relax, get rid of stress, eliminate pain, adjust the figure ... There are so many different problems to be solved in only one way - with massage. \n\nChoose your massage:",
+	"serviceDescriptionListMassage": "Relaxing - 1000 UAH, Stone massage - 1000 UAH, Wellness - 800 UAH, Aromatic - 1000 UAH",
 	"serviceNameNails": "Manicure",
 	"serviceLyricNails": "There are no well-groomed hands without good nails. \nBeautiful hands are signs of a real lady ... (E. Bear)",
 	"serviceDescriptionNails": "Types of manicure in our salon:",
-	"serviceDescriptionListNails": "Hardware, Classic, Combined, European",
+	"serviceDescriptionListNails": "Hardware - UAH 600, Classic - UAH 500, Combined - UAH 700, European - UAH 200",
 	"serviceNameCosmetology": "Cosmetology",
 	"serviceLyricCosmetology": "",
-	"serviceDescriptionCosmetology": "",
+	"serviceDescriptionCosmetology": "Modern cosmetology offers effective ways to solve skin problems, prolong its youth and maintain health. Different types of equipment and cosmetics are used for this purpose. \n\nOur salon offers:",
+	"serviceDescriptionListCosmetology": "Mechanical cleaning - 700 UAH, Ultrasonic cleaning - 1000 UAH, Oxygen therapy - 500 UAH, Peeling - 500 UAH",
 	"serviceNameHair": "Hair",
 	"serviceLyricHair": "",
-	"serviceDescriptionHair": ""
+	"serviceDescriptionHair": "You need to maintain the beauty and health of your hair constantly. Curls are affected by our diet, lifestyle, stress levels, environment and other factors. But it often happens that there should be an important event where you need to shine, but the hair is in poor condition. Hair care treatments will help to effectively eliminate dullness, dryness and other symptoms. \n\nOur salon offers:",
+	"serviceDescriptionListHair": "Haircuts for men and women - 200 UAH, Keratin straightening - 1000 UAH, Botox for hair - 1000 UAH, Hair reconstruction - 1000 UAH"
 }
