@@ -38,3 +38,35 @@ type UserAccountType = {
 declare global {
 	var db: PrismaClient<Prisma.PrismaClientOptions, never, Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>;
 }
+
+type OrderClientType = {
+	orderId: number;
+	date: string;
+	time: string;
+	service: string;
+	staff: string;
+	status: string;
+}[]
+
+type UserClientType = {
+	firstName: string;
+	lastName?: string;
+	phone: string;
+	email: string;
+	admin: boolean;
+}
+
+type OrdersType = {
+  orderId: number;
+  date: Date;
+  status: string;
+  serviceId?: number;
+  staffId?: number;
+  clientId?: number;
+	service: {
+		title: string
+	},
+	staff: {
+		firstName: string;
+	}
+}
