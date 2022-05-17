@@ -64,7 +64,7 @@ const registerOptions = (t: Translate, validate: any): {[k: string]: any} => ({
       message: t("phoneMinLength")
     },
     maxLength: {
-      value: 12,
+      value: 13,
       message: t("phoneMaxLength")
     }
   },
