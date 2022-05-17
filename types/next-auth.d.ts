@@ -18,12 +18,12 @@ declare module "next-auth" {
 
 }
 
-declare module "next-auth/react" {
+// declare module "next-auth/react" {
 	
-	interface SignInOptions {
-		user: User,
-	}
-}
+// 	interface SignInOptions {
+// 		user: User,
+// 	} & DefaultSession[""]
+// }
 
 declare module "next-auth/jwt" {
 	interface DefaultJWT {

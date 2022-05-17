@@ -1,19 +1,19 @@
-import NextAuth, { Account, Profile, Session, User } from "next-auth";
+import NextAuth, { NextAuthOptions, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import * as bcrypt from "bcrypt";
-import { DefaultJWT, JWT, JWTOptions } from "next-auth/jwt";
+import { DefaultJWT } from "next-auth/jwt";
+import { SignInOptions } from "next-auth/react";
+import { NextApiRequest, NextApiResponse } from "next";
 
 import { UserAccountType } from "../../../types/types";
-import { NextApiRequest, NextApiResponse } from "next";
-import { SessionContextValue, SignInOptions } from "next-auth/react";
 
 let userAccount: UserAccountType;
 const prisma = new PrismaClient();
 
 const confirmPasswordHash = (plainPassword: string, hashedPassword: string) => {
   return new Promise(resolve => {
-    bcrypt.compare(plainPassword, hashedPassword, function(err, res) {
+    bcrypt.compare(plainPassword, hashedPassword, (err, res) => {
       resolve(res);
     });
   });
@@ -24,11 +24,13 @@ const configuration = {
     secure: process.env.NODE_ENV && process.env.NODE_ENV === "production",
   },
   session: {
-    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60
   },
   jwt: {
     secret: process.env.NEXT_JWT_SECRET
+  },
+  pages: {
+    signIn: "/login"
   },
   providers: [
     CredentialsProvider({
@@ -73,11 +75,11 @@ const configuration = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }: SignInOptions) {
+    async signIn({ user }: { user: User }) {
       try {
         console.log("Sign in callback", user);
         console.log("User id: ", user.clientId);
-        if (typeof user.clientId !== typeof undefined) {
+        if (user.clientId) {
           if (user.isActive === "1") {
             console.log("User is active");
             return user;
@@ -94,7 +96,7 @@ const configuration = {
       }
 
     },
-    async register(firstName: string, lastName: string, email: string, password: string, phone: string) {
+    async register({firstName, lastName, email, password, phone }: { firstName: string, lastName: string, email: string, password: string, phone: string}) {
       try {
         await prisma.clients.create({
           data: {
@@ -114,18 +116,6 @@ const configuration = {
     },
     async session({session, token, user}: Session) {
       session.accessToken = token.accessToken;
-      // if (userAccount !== null) {
-      //   //session.user = userAccount;
-      //   session.user = {
-      //     userId: userAccount.clientId,
-      //     name: `${userAccount.firstName} ${userAccount.lastName}`,
-      //     email: userAccount.email
-      //   };
-      // } else if (typeof token.user !== typeof undefined && (typeof session.user === typeof undefined || (typeof session.user !== typeof undefined && typeof session.user.userId === typeof undefined))) {
-      //   session.user = token.user;
-      // } else if (typeof token !== typeof undefined) {
-      //   session.token = token;
-      // }
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }: DefaultJWT) {
@@ -137,6 +127,6 @@ const configuration = {
   }
 };
 
-const index = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, configuration);
+const index = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, configuration as unknown as NextAuthOptions);
 
 export default index;
