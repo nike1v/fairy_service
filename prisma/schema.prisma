@@ -1,49 +1,52 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("MYSQL_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model clients {
-  clientId        Int       @id @default(autoincrement()) @unique
-  firstName     String      @db.VarChar(250)
-  lastName      String      @db.VarChar(250)
-  email         String      @db.VarChar(250) @unique
-  phone         String      @db.VarChar(250) @unique
-  password      String      @db.VarChar(250)
-  isActive      String      @default("1") @db.Char(1)
-  registeredAt  DateTime   	@default(now())
-  expires				DateTime   	@default(now())
-  admin         Boolean     @default(false)
-  orders        orders[]
+  clientId     Int      @id @unique @default(autoincrement())
+  firstName    String   @db.VarChar(250)
+  lastName     String   @db.VarChar(250)
+  email        String   @unique @db.VarChar(250)
+  phone        String   @unique @db.VarChar(250)
+  password     String   @db.VarChar(250)
+  isActive     String   @default("1") @db.Char(1)
+  registeredAt DateTime @default(now())
+  expires      DateTime @default(now())
+  admin        Boolean  @default(false)
+  orders       orders[]
 }
 
 model services {
-  serviceId     Int         @id @default(autoincrement()) @unique
-  title         String      @db.VarChar(250) @unique
-  staffs        staff[]
-  orders        orders[]
+  serviceId Int      @id @unique @default(autoincrement())
+  title     String   @unique @db.VarChar(250)
+  staffs    staff[]
+  orders    orders[]
 }
 
 model staff {
-  staffId       Int         @id @default(autoincrement()) @unique
-  firstName     String      @db.VarChar(250)
-  service       services    @relation(fields: [serviceId], references: [serviceId])
-  serviceId     Int
-  orders        orders[]
+  staffId   Int      @id @unique @default(autoincrement())
+  firstName String   @db.VarChar(250)
+  service   services @relation(fields: [serviceId], references: [serviceId])
+  serviceId Int
+  orders    orders[]
 }
 
 model orders {
-  odrderId      Int         @id @default(autoincrement()) @unique
-  date          DateTime    @default(now())
-  status        String      @db.VarChar(250) @default("work")
-  serviceId     Int
-  staffId       Int
-  clientId      Int
-  client        clients     @relation(fields: [clientId], references: [clientId])
-  service       services    @relation(fields: [serviceId], references: [serviceId])
-  staff         staff       @relation(fields: [staffId], references: [staffId]) 
+  orderId   Int      @id @unique @default(autoincrement())
+  date      DateTime @default(now())
+  status    String   @default("work") @db.VarChar(250)
+  serviceId Int
+  staffId   Int
+  clientId  Int
+  client    clients  @relation(fields: [clientId], references: [clientId])
+  service   services @relation(fields: [serviceId], references: [serviceId])
+  staff     staff    @relation(fields: [staffId], references: [staffId])
 }
