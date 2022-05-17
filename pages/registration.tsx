@@ -27,7 +27,7 @@ const Login: NextPage = () => {
       const result: any = await signIn("credentials", {
         email: data.email, password: data.password, callbackUrl: `${window.location.origin}/services`, redirect: true }
       );
-      console.log(result);
+
       if (result) {
         router.push(result.url);
       }
