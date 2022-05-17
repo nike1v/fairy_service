@@ -39,6 +39,7 @@ model staff {
 model orders {
   odrderId      Int         @id @default(autoincrement()) @unique
   date          DateTime    @default(now())
+  status        String      @db.VarChar(250) @default("work")
   serviceId     Int
   staffId       Int
   clientId      Int
