@@ -1,15 +1,14 @@
 import NextAuth, { NextAuthOptions, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@prisma/client";
+import { db } from "../../../utils/prisma";
 import * as bcrypt from "bcrypt";
 import { DefaultJWT } from "next-auth/jwt";
-import { SignInOptions } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { UserAccountType } from "../../../types/types";
 
 let userAccount: UserAccountType;
-const prisma = new PrismaClient();
+const prisma = db;
 
 const confirmPasswordHash = (plainPassword: string, hashedPassword: string) => {
   return new Promise(resolve => {
