@@ -5,16 +5,17 @@ import Context from "../components";
 import styles from "../styles/Cabinet.module.css";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { db } from "../utils/prisma";
+import { PrismaClient } from "@prisma/client";
 import { getToken, JWT } from "next-auth/jwt";
 import { OrderClientType, OrdersType, UserClientType } from "../types/types";
 
 export async function getServerSideProps({ req }: { req: NextApiRequest }) {
+  const prisma = new PrismaClient();
   const token: null | JWT = await getToken({
     req,
     secret: process.env.NEXT_JWT_SECRET,
   });
-  const user = await db.clients.findFirst({
+  const user = await prisma.clients.findFirst({
     where: {
       email: token?.email as string | undefined,
     },
@@ -28,7 +29,7 @@ export async function getServerSideProps({ req }: { req: NextApiRequest }) {
     }
   });
 
-  const orders = await db.orders.findMany({
+  const orders = await prisma.orders.findMany({
     where: {
       clientId: user?.clientId
     },
