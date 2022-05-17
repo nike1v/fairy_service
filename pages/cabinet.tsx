@@ -6,7 +6,6 @@ import styles from "../styles/Cabinet.module.css";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { db } from "../utils/prisma";
-import { orders } from "@prisma/client";
 import { getToken, JWT } from "next-auth/jwt";
 import { OrderClientType, OrdersType, UserClientType } from "../types/types";
 
