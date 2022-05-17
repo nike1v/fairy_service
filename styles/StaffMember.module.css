@@ -6,6 +6,8 @@
 .staffPhoto {
 	padding: 20px;
 	flex: 1;
+	display: flex;
+	justify-content: center;
 }
 
 .staffDescr {
@@ -73,4 +75,5 @@
 	font-size: 18px;
 	line-height: 50px;
 	padding: 5px 25px;
+	margin-right: 5%;
 }
