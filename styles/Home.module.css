@@ -9,7 +9,7 @@
 .floatingName {
   margin: 0px;
   padding: 35px 40px 0px 0px;
-  font-family: 'Gabriela';
+  font-family: "Gabriela";
   text-align: right;
   font-style: normal;
   font-weight: 400;
@@ -20,13 +20,13 @@
 }
 
 .mainHeadText {
-  margin: 140px auto;
-  font-family: 'Gabriela';
+  margin: 100px auto 140px auto;
+  font-family: "Gabriela";
   font-weight: 400;
   font-size: 64px;
   line-height: 82px;
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .mainHeadText span {
@@ -36,7 +36,7 @@
 .checkButton {
   width: 388px;
   height: 73px;
-  background: #FFF8F8;
+  background: #fff8f8;
   border-radius: 20px;
   margin: auto;
   display: flex;
@@ -47,7 +47,7 @@
 .checkButtonContainer {
   width: 427px;
   height: 102px;
-  background: #D8C7B5;
+  background: #d8c7b5;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   margin: auto;
@@ -57,7 +57,7 @@
 }
 
 .checkButtonText {
-  font-family: 'Gabriela';
+  font-family: "Gabriela";
   font-style: normal;
   font-weight: 400;
   font-size: 36px;
@@ -66,6 +66,6 @@
 }
 
 .line {
-	margin: 0px 30px 20px 30px;
-	border-bottom: 1px solid #D8C7B5;
+  margin: 0px 30px 20px 30px;
+  border-bottom: 1px solid #d8c7b5;
 }
