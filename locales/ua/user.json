@@ -1,1 +1,20 @@
-{}
+{
+	"signOutButton": "Вихід",
+	"editButton": "Редагувати \nінформацію",
+	"greetings": "Вітаємо, ",
+	"yourOrders": "Ваші замовлені послуги:",
+	"statusWork": "В обробці",
+	"statusAbort": "Скасовано",
+	"statusCompleted": "Виконано",
+	"tableHeadDate": "Дата",
+	"tableHeadTime": "Час",
+	"tableHeadMaster": "Майстер",
+	"tableHeadService": "Послуга",
+	"tableHeadStatus": "Статус",
+	"tableHeadActions": "Дії",
+	"tableHeadClientName": "Клієнт",
+	"tableHeadClientNumber": "Телефон",
+	"acceptOrderButton": "Підтвердити",
+	"editOrderButton": "Змінити",
+	"abortOrderButton": "Скасувати"
+}

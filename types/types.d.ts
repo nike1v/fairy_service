@@ -46,7 +46,11 @@ type OrderClientType = {
 	service: string;
 	staff: string;
 	status: string;
-}[]
+	client: {
+		name: string;
+		phone: string;
+	};
+}
 
 type UserClientType = {
 	firstName: string;
@@ -65,8 +69,13 @@ type OrdersType = {
   clientId?: number;
 	service: {
 		title: string
-	},
+	};
 	staff: {
 		firstName: string;
-	}
+	};
+	client: {
+		firstName: string;
+		lastName: string;
+		phone: string;
+	};
 }

@@ -1,0 +1,25 @@
+.table {
+  margin: 30px 0px 0px 0px;
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+.table,
+.th,
+.td {
+  border: 1px solid;
+  padding: 3px 5px;
+}
+
+.aborted {
+  background-color: lightgray;
+}
+
+.completed {
+  background-color: lightgreen;
+}
+
+.abortButton {
+  opacity: 0.7;
+}

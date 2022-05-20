@@ -8,6 +8,9 @@ import { useRouter } from "next/router";
 import { PrismaClient } from "@prisma/client";
 import { getToken, JWT } from "next-auth/jwt";
 import { OrderClientType, OrdersType, UserClientType } from "../types/types";
+import Image from "next/image";
+import Link from "next/link";
+import OrdersTable from "../components/OrdersTable";
 
 export async function getServerSideProps({ req }: { req: NextApiRequest }) {
   const prisma = new PrismaClient();
@@ -29,7 +32,30 @@ export async function getServerSideProps({ req }: { req: NextApiRequest }) {
     }
   });
 
-  const orders = await prisma.orders.findMany({
+  const orders = user?.admin ? await prisma.orders.findMany({
+    include: {
+      service: {
+        select: {
+          title: true
+        }
+      },
+      staff: {
+        select: {
+          firstName: true,
+        }
+      },
+      client: {
+        select: {
+          firstName: true,
+          lastName: true,
+          phone: true
+        }
+      }
+    },
+    orderBy: {
+      date: "desc"
+    }
+  }) : await prisma.orders.findMany({
     where: {
       clientId: user?.clientId
     },
@@ -43,7 +69,17 @@ export async function getServerSideProps({ req }: { req: NextApiRequest }) {
         select: {
           firstName: true,
         }
+      },
+      client: {
+        select: {
+          firstName: true,
+          lastName: true,
+          phone: true
+        }
       }
+    },
+    orderBy: {
+      date: "desc"
     }
   });
 
@@ -55,7 +91,11 @@ export async function getServerSideProps({ req }: { req: NextApiRequest }) {
       time: dateConvert.toLocaleTimeString(),
       service: order.service.title,
       staff: order.staff.firstName,
-      status: order.status
+      status: order.status,
+      client: {
+        name: order.client.lastName + " " + order.client.firstName,
+        phone: order.client.phone
+      }
     });
   });
 
@@ -69,7 +109,7 @@ export async function getServerSideProps({ req }: { req: NextApiRequest }) {
 
 interface Props {
   user: UserClientType,
-  orders: OrderClientType
+  orders: OrderClientType[]
 }
 
 const Home: NextPage<Props> = ({ user, orders }) => {
@@ -84,13 +124,40 @@ const Home: NextPage<Props> = ({ user, orders }) => {
   }, [status, router]);
 
   const signOutButton = () => {
-    signOut();
+    signOut({ redirect: false });
+    router.push("/");
   }; 
 
   return (
     <Context>
       <main className={styles.container}>
-        <button onClick={signOutButton}>Sign out</button>
+        <div className={styles.greetings}>
+          {t("greetings")} {user.firstName}!
+        </div>
+        <div className={styles.infoBlock}>
+          <div className={styles.personalInfo}>
+            <div className={styles.userPhone}>
+              <Image src={"/images/phone.png"} alt="phone_icon" width={30} height={30} />
+              <div className={styles.texts}><a href={`tel:${user.phone}`}>{user.phone}</a></div>
+            </div>
+            <div className={styles.userEmail}>
+              <Image src={"/images/mail.png"} alt="email_icon" width={30} height={30} />
+              <div className={styles.texts}><a href={`mailto:${user.email}`}>{user.email}</a></div>
+            </div>
+            <div className={styles.userEdit}>
+              <Link href={"/cabinet/edit"}>{t("editButton")}</Link>
+            </div>
+            <div className={styles.signOut}>
+              <button onClick={signOutButton}>{t("signOutButton")}</button>
+            </div>
+          </div>
+          <div className={styles.orders}>
+            <span>
+              {t("yourOrders")}
+            </span>
+            <OrdersTable orders={orders} user={user} />
+          </div>    
+        </div>
       </main>
     </Context>
   );

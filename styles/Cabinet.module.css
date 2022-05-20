@@ -1,3 +1,64 @@
 .container {
-	margin: 30px;
+  margin: 30px 5%;
+}
+
+.greetings {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 41px;
+  margin: 20px 0px 20px 25%;
+  width: 75%;
+  text-align: center;
+  padding-bottom: 15px;
+  border-bottom: solid 1px #d8c7b5;
+}
+
+.infoBlock {
+  display: flex;
+}
+
+.personalInfo {
+  flex: 1;
+}
+
+.orders {
+  flex: 3;
+}
+
+.orders > span {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.signOut,
+.userEdit {
+  width: 150px;
+  min-height: 50px;
+  background: #d8c7b5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+  margin: 20px 45px;
+  white-space: pre-wrap;
+}
+
+.signOut {
+  line-height: 50px;
+}
+
+.userEdit {
+  line-height: 25px;
+}
+
+.userPhone,
+.userEmail {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+
+.texts {
+  padding-left: 10px;
 }
