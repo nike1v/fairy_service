@@ -64,7 +64,7 @@ const registerOptions = (t: Translate, validate: any): {[k: string]: any} => ({
       message: t("phoneMinLength")
     },
     maxLength: {
-      value: 13,
+      value: 10,
       message: t("phoneMaxLength")
     }
   },
@@ -118,10 +118,26 @@ const FormField: NextPage<Props> = ({ fieldName, register, errors, watch }) => {
     }
   };
 
+  const placeholder = () => {
+    switch (fieldName) {
+    case "firstName":
+      return t("placeholderName");
+
+    case "lastName":
+      return t("placeholderLastName");
+      
+    case "email":
+      return t("placeholderEmail");
+      
+    case "phone":
+      return t("placeholderPhone");
+    }
+  };
+
   return (
     <div className={styles.inputContainer}>
       <label className={`${styles.label} ${styles.required}`}>{t(`label${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`)}</label>
-      <input className={`${styles.input} ${errors[fieldName] && styles.error}`} type={inputType()} {...register(fieldName, registerOptions(t, validate)[fieldName])} />
+      <input className={`${styles.input} ${errors[fieldName] && styles.error}`} placeholder={placeholder()} type={inputType()} {...register(fieldName, registerOptions(t, validate)[fieldName])} />
       <ErrorMessage
         errors={errors}
         name={fieldName}
