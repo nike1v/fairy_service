@@ -16,82 +16,21 @@ interface Props {
 }
 
 const registerOptions = (t: Translate, validate: any): {[k: string]: any} => ({
-  firstName: { 
-    required: { 
-      value: true,
-      message: t("firstNameRequired")
-    }, 
-    pattern: { 
-      value: /^[A-ZА-Яa-zа-яіІїЇ]+((\s)?((\'|\-|\.)?([A-ZА-Яa-zа-яіІїЇ])+))*$/g,
-      message: t("firstNamePattern")
-    }, 
-    minLength: { 
-      value: 2, 
-      message: t("firstNameMinLength")
-    }
-  },
-  lastName: { 
-    pattern: { 
-      value: /^[A-ZА-Яa-zа-яіІїЇ]+((\s)?((\'|\-|\.)?([A-ZА-Яa-zа-яіІїЇ])+))*$/g, 
-      message: t("lastNamePattern")
-    }, 
-    minLength: { 
-      value: 2, 
-      message: t("lastNameMinLength")
-    } 
-  },
   email: {
     required: {
       value: true,
       message: t("emailRequired")
     },
     pattern: {
-      value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g,
       message: t("emailPattern")
-    }
-  },
-  phone: {
-    required: {
-      value: true,
-      message: t("phoneRequired")
-    },
-    pattern: {
-      value: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/img,
-      message: t("phonePattern")
-    },
-    minLength: {
-      value: 5,
-      message: t("phoneMinLength")
-    },
-    maxLength: {
-      value: 10,
-      message: t("phoneMaxLength")
     }
   },
   password: {
     required: {
       value: true,
       message: t("passwordRequired")
-    },
-    pattern: {
-      value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/g,
-      message: t("passwordPattern")
-    },
-    minLength: {
-      value: 8,
-      message: t("passwordMinLength")
-    },
-    maxLength: {
-      value: 28,
-      message: t("passwordMaxLength")
     }
-  },
-  confirmPassword: {
-    required: {
-      value: true,
-      message: t("confirmPasswordRequired")
-    },
-    validate: (value: any) => validate(value)
   }
 });
 

@@ -29,7 +29,8 @@ const configuration = {
     secret: process.env.NEXT_JWT_SECRET
   },
   pages: {
-    signIn: "/login"
+    signIn: "/login",
+    error: "/login"
   },
   providers: [
     CredentialsProvider({
@@ -43,7 +44,6 @@ const configuration = {
               email: credentials.email
             }
           });
-          console.log(user);
 
           if (user) {
             //Compare the hash
@@ -76,19 +76,19 @@ const configuration = {
   callbacks: {
     async signIn({ user }: { user: User }) {
       try {
-        console.log("Sign in callback", user);
-        console.log("User id: ", user.clientId);
+        // console.log("Sign in callback", user);
+        // console.log("User id: ", user.clientId);
         if (user.clientId) {
           if (user.isActive === "1") {
             console.log("User is active");
             return user;
           } else {
             console.log("User is not active");
-            return false;
+            return "/login";
           }
         } else {
           console.log("User id was undefined");
-          return false;
+          return "/login";
         }
       } catch (err) {
         console.error("Signin callback error:", err);
@@ -109,7 +109,7 @@ const configuration = {
         return true;
       } catch (err) {
         console.error("Failed to register user. Error", err);
-        return false;
+        return "/registration";
       }
 
     },

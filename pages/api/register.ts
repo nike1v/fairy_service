@@ -21,7 +21,7 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
 
       return res.status(200).end();
     } catch (error) {
-      return res.status(503).end().json({ error });
+      return res.status(503).json({ error });
     }
   } else {
     return res.status(405).end().json({error: "This request only supports POST requests"});

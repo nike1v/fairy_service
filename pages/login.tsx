@@ -4,10 +4,22 @@ import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Context from "../components";
 import styles from "../styles/Login.module.css";
-import FormField from "../components/FormField";
+import FormField from "../components/LoginFormField";
 import { Inputs } from "../types/types";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+
+const errors = {
+  Signin: "Спробуйте увійти з іншими даними.",
+  CredentialsSignin: "Дані не вірні, перевірте вірність введених данихю",
+  unauth: "Ви маєте бути авторизовані щоб записатись!",
+  default: "Не вийшло авторизуватись, спробуйте ще раз.",
+};
+
+const SignInError = ({ error }: { error: string | string[]}) => {
+  const errorMessage = error && (errors[error as keyof typeof errors] ?? errors.default);
+  return <div className={styles.credError}>{errorMessage}</div>;
+};
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -20,17 +32,18 @@ const Login: NextPage = () => {
   const handleLogin = async (data: Inputs) => {
     try {
       const result: any = await signIn("credentials", {
-        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/services`, redirect: true }
+        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/cabinet`, redirect: true }
       );
-      if (result.error !== null) {
-        if (result.status === 401) {
-          alert("Your username/password combination was incorrect. Please try again");
-        } else {
-          alert(result.error);
-        }
-      } else {
-        router.push(result.url);
-      }
+      console.log(result);
+      // if (result.error) {
+      //   if (result.status === 401) {
+      //     alert("Your username/password combination was incorrect. Please try again");
+      //   } else {
+      //     alert(result.error);
+      //   }
+      // } else {
+      //   router.push(result.url);
+      // }
     } catch (error: any) {
       console.error(error);
     }
@@ -45,6 +58,7 @@ const Login: NextPage = () => {
           {t("loginHeader")}
         </div>
         <form onSubmit={handleSubmit(onSubmit)} noValidate className={styles.loginForm}>
+          {router.query.error && <SignInError error={router.query.error} />}
           <FormField fieldName="email" register={register} errors={errors} watch={watch} />
 
           <FormField fieldName="password" register={register} errors={errors} watch={watch} />

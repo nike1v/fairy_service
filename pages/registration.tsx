@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
 import Context from "../components";
-import FormField from "../components/FormField";
+import FormField from "../components/RegisterFormField";
 
 import { Inputs } from "../types/types";
 
@@ -25,7 +25,7 @@ const Login: NextPage = () => {
     await axios.post("/api/register", data);
     try {
       const result: any = await signIn("credentials", {
-        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/services`, redirect: true }
+        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/cabinet`, redirect: true }
       );
 
       if (result) {
