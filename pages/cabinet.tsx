@@ -89,6 +89,7 @@ export async function getServerSideProps({ req }: { req: NextApiRequest }) {
       orderId: order.orderId,
       date: dateConvert.toLocaleDateString(),
       time: dateConvert.toLocaleTimeString(),
+      dateTime: dateConvert.toLocaleString(),
       service: order.service.title,
       staff: order.staff.firstName,
       status: order.status,

@@ -43,6 +43,7 @@ type OrderClientType = {
 	orderId: number;
 	date: string;
 	time: string;
+	dateTime: string;
 	service: string;
 	staff: string;
 	status: string;
