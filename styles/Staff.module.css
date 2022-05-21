@@ -23,12 +23,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin: 0px 10%;
 }
 
 .staffBox {
   display: flex;
   justify-content: space-evenly;
-  flex: 0 0 23%;
+  flex: 0 0 22%;
   margin: 0px 2% 5% 2%;
   flex-direction: column;
   font-style: normal;
