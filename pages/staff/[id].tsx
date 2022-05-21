@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
-import Link from "next/link";
 import Context from "../../components";
 import styles from "../../styles/StaffMember.module.css";
 
@@ -60,6 +59,23 @@ const Home: NextPage<Props> = ({ params }) => {
     }
   };
 
+  const bookingLinkHandler = () => {
+    switch(params.id) {
+    case "1": 
+      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868611&pId=655824";
+    case "2": 
+      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868613&pId=655824";
+    case "3": 
+      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868651&pId=655824";
+    case "4": 
+      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868653&pId=655824";
+    case "5": 
+      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868654&pId=655824";
+    case "6": 
+      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868656&pId=655824";
+    }
+  };
+
   return (
     <Context>
       <main className={styles.container}>
@@ -84,9 +100,7 @@ const Home: NextPage<Props> = ({ params }) => {
               <a href={certificateHandler()} target="_blank" rel="noreferrer" >{t("staffCertificates")}</a>
             </div>
             <div className={styles.staffSignUp}>
-              <Link href={"/cabinet"}>
-                <a>{t("staffSignUp")}</a>
-              </Link>
+              <a href={bookingLinkHandler()} target="_blank" rel="noreferrer">{t("staffSignUp")}</a>
             </div>
           </div>
         </div>
