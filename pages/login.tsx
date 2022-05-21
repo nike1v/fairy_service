@@ -35,15 +35,15 @@ const Login: NextPage = () => {
       const result: any = await signIn("credentials", {
         email: data.email, password: data.password, callbackUrl: `${window.location.origin}/cabinet`, redirect: true }
       );
-      // if (result.error) {
-      //   if (result.status === 401) {
-      //     alert("Your username/password combination was incorrect. Please try again");
-      //   } else {
-      //     alert(result.error);
-      //   }
-      // } else {
-      //   router.push(result.url);
-      // }
+      if (result.error) {
+        if (result.status === 401) {
+          alert("Your username/password combination was incorrect. Please try again");
+        } else {
+          alert(result.error);
+        }
+      } else {
+        router.push(result.url);
+      }
     } catch (error: any) {
       console.error(error);
     }
