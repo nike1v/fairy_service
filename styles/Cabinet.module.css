@@ -62,3 +62,9 @@
 .texts {
   padding-left: 10px;
 }
+
+.successMessage {
+  text-align: center;
+  color: limegreen;
+  font-size: x-large;
+}

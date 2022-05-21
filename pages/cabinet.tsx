@@ -105,7 +105,18 @@ export async function getServerSideProps({ req }: { req: NextApiRequest }) {
       orders: ordersFiltered
     },
   };
-}
+};
+
+const messages = {
+  success: "Ви успішно зареєструвались!",
+  saved: "Ваші дані успішно оновлено!",
+  default: "Ви успішно зареєструвались."
+};
+
+const ConfirmRegister = ({ message }: { message: string | string[]}) => {
+  const successMessage = message && (messages.success ?? messages.default);
+  return <div className={styles.successMessage}>{successMessage}</div>;
+};
 
 interface Props {
   user: UserClientType,
@@ -119,7 +130,7 @@ const Home: NextPage<Props> = ({ user, orders }) => {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/");
+      router.push("/login?error=unauth");
     }
   }, [status, router]);
 
@@ -131,6 +142,7 @@ const Home: NextPage<Props> = ({ user, orders }) => {
   return (
     <Context>
       <main className={styles.container}>
+        {router.query.success && <ConfirmRegister message={router.query.success} />}
         <div className={styles.greetings}>
           {t("greetings")} {user.firstName}!
         </div>

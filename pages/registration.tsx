@@ -13,7 +13,7 @@ import { Inputs } from "../types/types";
 
 import styles from "../styles/Register.module.css";
 
-const Login: NextPage = () => {
+const Register: NextPage = () => {
   const router = useRouter();
   const { t } = useTranslation("auth");
   const { register, handleSubmit, formState: { errors }, watch } = useForm<Inputs>({
@@ -25,7 +25,7 @@ const Login: NextPage = () => {
     await axios.post("/api/register", data);
     try {
       const result: any = await signIn("credentials", {
-        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/cabinet`, redirect: true }
+        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/cabinet?success=true`, redirect: true }
       );
 
       if (result) {
@@ -89,4 +89,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export default Register;

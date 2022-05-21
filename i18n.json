@@ -43,6 +43,9 @@
     ],
     "/cabinet": [
       "user"
+    ],
+    "/cabinet/edit": [
+      "auth"
     ]
   }
 }
