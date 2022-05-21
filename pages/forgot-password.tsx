@@ -1,19 +1,27 @@
 import { NextPage } from "next";
 import useTranslation from "next-translate/useTranslation";
-import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Context from "../components";
 import styles from "../styles/Login.module.css";
-import FormField from "../components/FormField";
+import FormField from "../components/RegisterFormField";
 import { Inputs } from "../types/types";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const Login: NextPage = () => {
   const { t } = useTranslation("auth");
+  const router = useRouter();
   const { register, handleSubmit, formState: { errors }, watch } = useForm<Inputs>({
     criteriaMode: "all",
     mode: "onBlur"
   });
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+
+  const forgotPassword = async (data: { email: string }) => {       
+    await axios.post("/api/forgot", data);
+    router.push("/login?error=recover");
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = data => forgotPassword(data);
 
   return (
     <Context>
