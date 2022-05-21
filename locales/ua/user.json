@@ -16,5 +16,6 @@
 	"tableHeadClientNumber": "Телефон",
 	"acceptOrderButton": "Підтвердити",
 	"editOrderButton": "Змінити",
-	"abortOrderButton": "Скасувати"
+	"abortOrderButton": "Скасувати",
+	"filterButton": "Фільтрувати"
 }

@@ -27,3 +27,46 @@
 .input {
   border: 1px solid;
 }
+
+.filter {
+  position: relative;
+}
+
+.filterButton {
+  cursor: pointer;
+}
+
+.filterDropdown {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding: 0.5rem;
+  display: none;
+  z-index: 50;
+  left: 0;
+  max-height: calc(100vh - 152px);
+  position: absolute;
+  margin-top: 0.5rem;
+  background-color: white;
+}
+@media (min-width: 768px) {
+  .filterDropdown {
+    display: block;
+  }
+}
+.filterDropdown {
+  border-top-width: 1px;
+  border-top-color: #e4e7eb;
+  border-top-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.filterDropdownActions button {
+  border-radius: 0.125rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #2b7de9;
+  border-color: transparent;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}

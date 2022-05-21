@@ -3,7 +3,7 @@ import useTranslation from "next-translate/useTranslation";
 import { signOut, useSession } from "next-auth/react";
 import Context from "../components";
 import styles from "../styles/Cabinet.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { PrismaClient } from "@prisma/client";
 import { getToken, JWT } from "next-auth/jwt";
@@ -11,6 +11,7 @@ import { OrderClientType, OrdersType, UserClientType } from "../types/types";
 import Image from "next/image";
 import Link from "next/link";
 import OrdersTable from "../components/OrdersTable";
+import axios from "axios";
 
 export async function getServerSideProps({ req }: { req: NextApiRequest }) {
   const prisma = new PrismaClient();
@@ -126,6 +127,8 @@ interface Props {
 
 const Home: NextPage<Props> = ({ user, orders }) => {
   const { t, lang } = useTranslation("user");
+  const [ordersList, setOrdersList] = useState(orders);
+  const [ordersListFiltered, setOrdersListFiltered] = useState(orders);
   const router = useRouter();
   const { data: session, status } = useSession();
 
@@ -138,7 +141,23 @@ const Home: NextPage<Props> = ({ user, orders }) => {
   const signOutButton = () => {
     signOut({ redirect: false });
     router.push("/");
-  }; 
+  };
+  
+  const handleOrdersFilter = async (date: string, client: string, service: string, staff: string) => {
+    console.log(orders);
+    if (date || client || service || staff) {
+      console.log({
+        staff,
+        service,
+        client,
+        date});
+      const filtered = orders.filter((order: OrderClientType) => new Date(date).toDateString() === new Date(order.date).toDateString() || client === order.client.name || service === order.service || staff === order.staff);
+      console.log(filtered);
+      setOrdersListFiltered(filtered);
+    } else {
+      setOrdersListFiltered(ordersList);
+    }
+  };
 
   return (
     <Context>
@@ -165,10 +184,11 @@ const Home: NextPage<Props> = ({ user, orders }) => {
             </div>
           </div>
           <div className={styles.orders}>
+            {!user.admin &&
             <span>
               {t("yourOrders")}
-            </span>
-            <OrdersTable orders={orders} user={user} />
+            </span>}
+            <OrdersTable orders={ordersListFiltered} user={user} orderUpdate={handleOrdersFilter} />
           </div>    
         </div>
       </main>
