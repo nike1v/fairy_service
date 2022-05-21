@@ -9,7 +9,7 @@ interface Props {
 
 const Context: NextPage<Props> = ({ children }) => {
   return (
-    <div id="container">
+    <div id={styles.container}>
       <Header />
       {children}
       <div className={styles.line}></div>
