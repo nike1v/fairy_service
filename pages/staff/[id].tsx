@@ -1,6 +1,8 @@
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
+import { useState } from "react";
 import Context from "../../components";
 import styles from "../../styles/StaffMember.module.css";
 
@@ -37,6 +39,8 @@ interface Props {
 
 const Home: NextPage<Props> = ({ params }) => {
   const { t } = useTranslation("staff");
+  const [isIframe, setIsIframe] = useState(false);
+  const { data: session, status } = useSession();
 
   const certificateHandler = () => {
     switch (params.id) {
@@ -60,19 +64,31 @@ const Home: NextPage<Props> = ({ params }) => {
   };
 
   const bookingLinkHandler = () => {
-    switch(params.id) {
-    case "1": 
-      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868611&pId=655824";
-    case "2": 
-      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868613&pId=655824";
-    case "3": 
-      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868651&pId=655824";
-    case "4": 
-      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868653&pId=655824";
-    case "5": 
-      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868654&pId=655824";
-    case "6": 
-      return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868656&pId=655824";
+    if (status === "authenticated") {
+      switch(params.id) {
+      case "1": 
+        return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868611&pId=655824";
+      case "2": 
+        return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868613&pId=655824";
+      case "3": 
+        return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868651&pId=655824";
+      case "4": 
+        return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868653&pId=655824";
+      case "5": 
+        return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868654&pId=655824";
+      case "6": 
+        return "https://ua.fresha.com/book-now/charivnicya-s8p6730s/services?lid=698448&eid=1868656&pId=655824";
+      }
+    } else {
+      return "/login?error=unauth";
+    }
+  };
+
+  const handleOrderButton = () => {
+    if (status === "authenticated") {
+      setIsIframe(true);
+    } else {
+      return "/login?error=unauth";
     }
   };
 
@@ -99,12 +115,16 @@ const Home: NextPage<Props> = ({ params }) => {
             <div className={styles.staffCertificates}>
               <a href={certificateHandler()} target="_blank" rel="noreferrer" >{t("staffCertificates")}</a>
             </div>
-            <div className={styles.staffSignUp}>
-              <a href={bookingLinkHandler()} target="_blank" rel="noreferrer">{t("staffSignUp")}</a>
+            <div className={styles.staffSignUp} onClick={handleOrderButton}>
+              <a href={bookingLinkHandler()} target={status === "authenticated" ? "order" : "_self"} rel="noreferrer">{t("staffSignUp")}</a>
             </div>
           </div>
         </div>
       </main>
+      {
+        isIframe ?
+          <iframe name="order" height="300px" width="100%" title="Iframe Example" /> : null
+      }
     </Context>
   );
 };

@@ -38,3 +38,11 @@
   line-height: 23px;
   cursor: pointer;
 }
+
+.iframe {
+  display: none;
+}
+
+.activeIframe {
+  display: block;
+}
