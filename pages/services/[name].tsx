@@ -64,7 +64,7 @@ const Home: NextPage<Props> = ({ params }) => {
                 ))}</ul>
               </div>
               <div className={styles.serviceButton}>
-                <Link href={"/calendar"}>
+                <Link href={"/staff"+`?field=${params.name}`}>
                   {t("serviceButton")}
                 </Link>
               </div>

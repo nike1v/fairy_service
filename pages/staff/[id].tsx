@@ -84,7 +84,7 @@ const Home: NextPage<Props> = ({ params }) => {
               <a href={certificateHandler()} target="_blank" rel="noreferrer" >{t("staffCertificates")}</a>
             </div>
             <div className={styles.staffSignUp}>
-              <Link href={"/services"}>
+              <Link href={"/cabinet"}>
                 <a>{t("staffSignUp")}</a>
               </Link>
             </div>
