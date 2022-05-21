@@ -35,7 +35,6 @@ const Login: NextPage = () => {
       const result: any = await signIn("credentials", {
         email: data.email, password: data.password, callbackUrl: `${window.location.origin}/cabinet`, redirect: true }
       );
-      console.log(result);
       // if (result.error) {
       //   if (result.status === 401) {
       //     alert("Your username/password combination was incorrect. Please try again");
