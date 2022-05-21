@@ -131,6 +131,9 @@ const Home: NextPage<Props> = ({ user, orders }) => {
   const [ordersListFiltered, setOrdersListFiltered] = useState(orders);
   const router = useRouter();
   const { data: session, status } = useSession();
+  const userNames = Array.from(new Set(orders.map((order: OrderClientType) => order.client.name)));
+  const services = Array.from(new Set(orders.map((order: OrderClientType) => order.service)));
+  const staffNames = Array.from(new Set(orders.map((order: OrderClientType) => order.staff)));
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -144,19 +147,21 @@ const Home: NextPage<Props> = ({ user, orders }) => {
   };
   
   const handleOrdersFilter = async (date: string, client: string, service: string, staff: string) => {
-    console.log(orders);
-    if (date || client || service || staff) {
-      console.log({
-        staff,
-        service,
-        client,
-        date});
-      const filtered = orders.filter((order: OrderClientType) => new Date(date).toDateString() === new Date(order.date).toDateString() || client === order.client.name || service === order.service || staff === order.staff);
-      console.log(filtered);
-      setOrdersListFiltered(filtered);
-    } else {
-      setOrdersListFiltered(ordersList);
+    let filtered = ordersList;
+    if (date){
+      filtered = ordersList.filter((order: OrderClientType) => new Date(date).toDateString() === new Date(order.date).toDateString());
     }
+    if (client) {
+      filtered = ordersList.filter((order: OrderClientType) => client === order.client.name);
+    }
+    if (service) {
+      filtered = ordersList.filter((order: OrderClientType) => service === order.service);
+    }
+    if(staff) {
+      filtered = ordersList.filter((order: OrderClientType) => staff === order.staff);
+    }
+    console.log(filtered);
+    setOrdersListFiltered(filtered);
   };
 
   return (
@@ -188,7 +193,7 @@ const Home: NextPage<Props> = ({ user, orders }) => {
             <span>
               {t("yourOrders")}
             </span>}
-            <OrdersTable orders={ordersListFiltered} user={user} orderUpdate={handleOrdersFilter} />
+            <OrdersTable orders={ordersListFiltered} user={user} orderUpdate={handleOrdersFilter} userNames={userNames} services={services} staffNames={staffNames} />
           </div>    
         </div>
       </main>

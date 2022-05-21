@@ -12,7 +12,10 @@ import { FilterAlt } from "@mui/icons-material";
 interface Props {
   user: UserClientType,
   orders: OrderClientType[];
-  orderUpdate: any
+  orderUpdate: any,
+  userNames: string[],
+  services: string[],
+  staffNames: string[],
 }
 
 interface filterProps {
@@ -72,11 +75,8 @@ const FilterWindow: NextPage<filterProps> = ({ user, children, orderUpdate }) =>
   );
 };
 
-const OrdersTable: NextPage<Props> = ({ user, orders, orderUpdate }) => {
+const OrdersTable: NextPage<Props> = ({ user, orders, orderUpdate, userNames, services, staffNames }) => {
   const { t } = useTranslation("user");
-  const userNames = Array.from(new Set(orders.map((order: OrderClientType) => order.client.name)));
-  const services = Array.from(new Set(orders.map((order: OrderClientType) => order.service)));
-  const staffNames = Array.from(new Set(orders.map((order: OrderClientType) => order.staff)));
   const [currentDate, setCurrentDate] = useState("");
   const [currentClient, setCurrentClient] = useState("");
   const [currentService, setCurrentService] = useState("");
