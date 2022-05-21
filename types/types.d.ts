@@ -79,3 +79,7 @@ type OrdersType = {
 		phone: string;
 	};
 }
+
+type EditUser = {
+	clientId: number
+} & Inputs;

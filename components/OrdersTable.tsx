@@ -120,8 +120,7 @@ const OrdersTable: NextPage<Props> = ({ user, orders }) => {
                         </button>
                       </>
                     ) : (
-                      <>
-                      </>
+                      null
                     )
                   }
                   <button onClick={() => handleUpdateOrder(order.orderId, "abort")} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`}>
