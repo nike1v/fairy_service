@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/inline-script-id */
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import Script from "next/script";
 
 export default class MyDocument extends Document {
   render() {
@@ -16,10 +15,9 @@ export default class MyDocument extends Document {
           <div id="fb-root"></div>
 
           {/* <!-- Your Chat Plugin code --> */}
-          <div id="fb-customer-chat" className="fb-customerchat">
-          </div>
+          <div id="fb-customer-chat" className="fb-customerchat"></div>
 
-          <Script dangerouslySetInnerHTML={{
+          <script dangerouslySetInnerHTML={{
             __html: `
 				var chatbox = document.getElementById('fb-customer-chat');
 				chatbox.setAttribute("page_id", "104657677549573");
@@ -28,7 +26,7 @@ export default class MyDocument extends Document {
           }} />
 
           {/* <!-- Your SDK code --> */}
-          <Script dangerouslySetInnerHTML={{
+          <script dangerouslySetInnerHTML={{
             __html: `
 			window.fbAsyncInit = function() {
         FB.init({
