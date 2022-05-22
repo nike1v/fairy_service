@@ -1,1 +1,21 @@
-{}
+{
+	"signOutButton": "Exit",
+	"editButton": "Edit \nInformation",
+	"greetings": "Welcome, ",
+	"yourOrders": "Your orders:",
+	"statusWork": "In progress",
+	"statusAbort": "Canceled",
+	"statusCompleted": "Completed",
+	"tableHeadDate": "Date",
+	"tableHeadTime": "Time",
+	"tableHeadMaster": "Master",
+	"tableHeadService": "Service",
+	"tableHeadStatus": "Status",
+	"tableHeadActions": "Actions",
+	"tableHeadClientName": "Client",
+	"tableHeadClientNumber": "Phone",
+	"acceptOrderButton": "Confirm",
+	"editOrderButton": "Edit",
+	"abortOrderButton": "Cancel",
+	"filterButton": "Filter"
+}
