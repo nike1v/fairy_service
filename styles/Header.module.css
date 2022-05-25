@@ -1,107 +1,109 @@
 .Header {
-	min-height: 120px;
-	min-width: 100%;
+  min-height: 120px;
+  min-width: 100%;
 }
 
 .topBar {
-	display: flex;
-	min-height: 25px;
-	background-color: #D8C7B5;
-	padding: 0px 20px;
-	align-items: center;
-	justify-content: flex-end;
+  display: flex;
+  min-height: 25px;
+  background-color: #d8c7b5;
+  padding: 0px 20px;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .socialIcons {
-	display: flex;
-	width: 60px;
-	justify-content: space-between;
-	margin-right: 60px;
+  display: flex;
+  width: 60px;
+  justify-content: space-between;
+  margin-right: 60px;
 }
 
 .socialIcons > a {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .languageButton {
-	min-width: 22px;
-	width: 23px;
-	cursor: pointer;
+  min-width: 22px;
+  width: 23px;
+  cursor: pointer;
 }
 
 .headerBar {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	font-size: 18px;
-	font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .logoIcon {
-	width: 300px;
-	margin-left: 20px;
-	margin-top: 10px;
-	flex: 1;
-	cursor: pointer;
+  width: 300px;
+  margin-left: 20px;
+  margin-top: 10px;
+  flex: 1;
+  cursor: pointer;
 }
 
 .mainMenu {
-	display: flex;
-	justify-content: flex-end;
-	width: 500px;
-	flex: 3;
+  display: flex;
+  justify-content: flex-end;
+  width: 500px;
+  flex: 3;
+  padding-right: 20px;
 }
 
 .mainMenu a {
-	display: inline-block;
-	margin-left: 35px;
-	font-family: 'Gabriela';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
-	line-height: 23px;
+  display: inline-block;
+  margin-left: 35px;
+  font-family: "Gabriela";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
 }
 
-.headerBar a:hover, .active {
-	color: #FFB800;
+.headerBar a:hover,
+.active {
+  color: #ffb800;
 }
 
 .logIn {
-	width: 80px;
-	margin-right: 20px;
-	text-align: right;
-	font-family: 'Gabriela';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
-	line-height: 23px;
+  width: 80px;
+  margin-right: 20px;
+  text-align: right;
+  font-family: "Gabriela";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
 }
 
 .userCabinet {
-	width: 80px;
-	margin-right: 20px;
-	text-align: right;
-	font-family: 'Gabriela';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
-	line-height: 21px;
+  width: 80px;
+  margin-right: 20px;
+  text-align: right;
+  font-family: "Gabriela";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
 }
 
-.line  {
-	margin: 0px 30px;
-	border-bottom: 1px solid #D8C7B5;
+.line {
+  margin: 0px 30px;
+  border-bottom: 1px solid #d8c7b5;
 }
 
 .mainMenu .dropMenu {
-	margin-left: 0px;
+  margin-left: 0px;
 }
 
 .dropMenu:hover {
-	color: #FFB800;
+  color: #ffb800;
 }
 
 .mainMenu .dropButtons > a {
-	margin: 0px 5px;
+  margin: 0px 5px;
 }

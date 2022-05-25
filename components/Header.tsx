@@ -6,22 +6,19 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import Script from "next/script";
 import { useSession } from "next-auth/react";
 
-import restricted from "../pages/api/restricted";
 import SocialIcon from "./SocialIcon";
 
 import styles from "../styles/Header.module.css";
 
 const Header: NextPage = () => {
   const { t, lang } = useTranslation("common");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isShown, setIsShown] = useState(false);
   const { asPath } = useRouter();
   const { data: session, status } = useSession();
 
@@ -108,22 +105,22 @@ const Header: NextPage = () => {
           <Link href={"/contacts"}>
             <a className={asPath.startsWith("/contacts") ? `${styles.active}` : ""}>{t("menuContacts")}</a>
           </Link>
+          {
+            status === "authenticated" ? (
+              <div className={styles.userCabinet}>
+                <Link href="/cabinet">
+                  <a className={asPath.startsWith("/cabinet") ? `${styles.active}` : ""}>{t("userCabinet")}</a>
+                </Link>
+              </div>
+            ) : (
+              <div className={styles.logIn}>
+                <Link href="/login">
+                  <a className={asPath.startsWith("/login") ? `${styles.active}` : ""}>{t("logIn")}</a>
+                </Link>
+              </div>
+            )
+          }
         </div>
-        {
-          status === "authenticated" ? (
-            <div className={styles.userCabinet}>
-              <Link href="/cabinet">
-                <a className={asPath.startsWith("/cabinet") ? `${styles.active}` : ""}>{t("userCabinet")}</a>
-              </Link>
-            </div>
-          ) : (
-            <div className={styles.logIn}>
-              <Link href="/login">
-                <a className={asPath.startsWith("/login") ? `${styles.active}` : ""}>{t("logIn")}</a>
-              </Link>
-            </div>
-          )
-        }
       </div>
       <div className={styles.line}></div>
     </header>
