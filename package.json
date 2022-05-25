@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pscale connect fairy_beauty_salon main --port 3309 & npx prisma studio & next dev",
+    "devFull": "npm run db & npm run prisma & npm run dev",
+    "dev": "next dev",
+    "prisma": "npx prisma studio",
+    "db": "pscale connect fairy_beauty_salon main --port 3309",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
