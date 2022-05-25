@@ -39,7 +39,6 @@ interface Props {
 
 const Home: NextPage<Props> = ({ params }) => {
   const { t } = useTranslation("staff");
-  const [isIframe, setIsIframe] = useState(false);
   const { data: session, status } = useSession();
 
   const certificateHandler = () => {
@@ -86,7 +85,7 @@ const Home: NextPage<Props> = ({ params }) => {
 
   const handleOrderButton = () => {
     if (status === "authenticated") {
-      setIsIframe(true);
+      return;
     } else {
       return "/login?error=unauth";
     }
@@ -116,15 +115,11 @@ const Home: NextPage<Props> = ({ params }) => {
               <a href={certificateHandler()} target="_blank" rel="noreferrer" >{t("staffCertificates")}</a>
             </div>
             <div className={styles.staffSignUp} onClick={handleOrderButton}>
-              <a href={bookingLinkHandler()} target={status === "authenticated" ? "order" : "_self"} rel="noreferrer">{t("staffSignUp")}</a>
+              <a href={bookingLinkHandler()} target={status === "authenticated" ? "_blank" : "_self"} rel="noreferrer">{t("staffSignUp")}</a>
             </div>
           </div>
         </div>
       </main>
-      {
-        isIframe ?
-          <iframe name="order" height="300px" width="100%" title="Iframe Example" /> : null
-      }
     </Context>
   );
 };
