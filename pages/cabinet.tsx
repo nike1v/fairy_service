@@ -29,10 +29,10 @@ interface Props {
 const Home: NextPage<Props> = () => {
   const { t } = useTranslation("user");
   const [ordersList, setOrdersList] = useState<OrderClientType[]>([] as OrderClientType[]);
+  const { data: session, status } = useSession();
   const [user, setUser] = useState<UserClientType>({} as UserClientType);
   const [ordersListFiltered, setOrdersListFiltered] = useState<OrderClientType[]>([]);
   const router = useRouter();
-  const { data: session, status } = useSession();
   const userNames = Array.from(new Set(ordersList.map((order: OrderClientType) => order.client.name)));
   const services = Array.from(new Set(ordersList.map((order: OrderClientType) => order.service)));
   const staffNames = Array.from(new Set(ordersList.map((order: OrderClientType) => order.staff)));
@@ -44,10 +44,15 @@ const Home: NextPage<Props> = () => {
   }, [status, router]);
 
   useEffect(() => {
+    if (status === "authenticated") {
+      setUser(session?.user as UserClientType);
+    }
+  }, [session, status]);
+
+  useEffect(() => {
     const getOrdersList = async () => {
       const response = await(await fetch("/api/getOrders")).json();
-      const { user, orders } = response;
-      setUser(user);
+      const { orders } = response;
       setOrdersList(orders);
       setOrdersListFiltered(orders);
     };

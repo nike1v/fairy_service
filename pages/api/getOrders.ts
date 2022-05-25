@@ -7,22 +7,8 @@ const getOrders = async (req: NextApiRequest, res: NextApiResponse) => {
   const prisma = new PrismaClient();
   const secret = process.env.NEXT_JWT_SECRET;
   const session = await getToken({ req, secret });
-  if (session) {
-    const user = await prisma.clients.findFirst({
-      where: {
-        email: session.user.email
-      },
-      select: {
-        clientId: true,
-        firstName: true,
-        phone: true,
-        email: true,
-        lastName: true,
-        admin: true
-      }
-    });
-  
-    const orders = user?.admin ? await prisma.orders.findMany({
+  if (session) {  
+    const orders = session.user.admin ? await prisma.orders.findMany({
       include: {
         service: {
           select: {
@@ -47,7 +33,7 @@ const getOrders = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }) : await prisma.orders.findMany({
       where: {
-        clientId: user?.clientId
+        clientId: session.user.id
       },
       include: {
         service: {
@@ -60,13 +46,7 @@ const getOrders = async (req: NextApiRequest, res: NextApiResponse) => {
             firstName: true,
           }
         },
-        client: {
-          select: {
-            firstName: true,
-            lastName: true,
-            phone: true
-          }
-        }
+        client: true,
       },
       orderBy: {
         date: "desc"
@@ -85,12 +65,11 @@ const getOrders = async (req: NextApiRequest, res: NextApiResponse) => {
         status: order.status,
         client: {
           name: order.client.lastName + " " + order.client.firstName,
-          phone: order.client.phone
+          ...order.client,
         }
       });
     });
     const props = {
-      user: user,
       orders: ordersFiltered
     };
     res.status(200).json(props);
@@ -99,7 +78,6 @@ const getOrders = async (req: NextApiRequest, res: NextApiResponse) => {
   } else {
     res.status(401).end();
     return {
-      user: {},
       orders: []
     };
   }
