@@ -26,7 +26,7 @@
   margin: 0px 10%;
 }
 
-.staffBox {
+.staffBoxContainer {
   display: flex;
   justify-content: space-evenly;
   flex: 0 0 22%;
@@ -37,6 +37,13 @@
   font-size: 18px;
   line-height: 23px;
   cursor: pointer;
+}
+
+.staffBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .iframe {
