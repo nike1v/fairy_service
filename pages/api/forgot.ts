@@ -6,13 +6,14 @@ const forgotPassword = async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
       console.log(email);
-      return res.status(200).end();
+      res.status(200);
     } catch (error) {
-      return res.status(503).json({ error });
+      res.status(503).json({ error });
     }
   } else {
-    return res.status(405).end().json({error: "This request only supports POST requests"});
+    res.status(405).json({error: "This request only supports POST requests"});
   }
+  return res.end();
 };
 
 export default forgotPassword;
