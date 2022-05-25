@@ -17,5 +17,6 @@
 	"acceptOrderButton": "Confirm",
 	"editOrderButton": "Edit",
 	"abortOrderButton": "Cancel",
-	"filterButton": "Filter"
+	"filterButton": "Filter",
+	"clearFilterButton": "Clear filters"
 }

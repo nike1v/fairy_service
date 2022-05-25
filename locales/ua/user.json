@@ -17,5 +17,6 @@
 	"acceptOrderButton": "Підтвердити",
 	"editOrderButton": "Змінити",
 	"abortOrderButton": "Скасувати",
-	"filterButton": "Фільтрувати"
+	"filterButton": "Фільтрувати",
+	"clearFilterButton": "Скинути фільтри"
 }

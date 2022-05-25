@@ -155,7 +155,6 @@ const Home: NextPage<Props> = ({ user, orders }) => {
     if(staff) {
       filtered = ordersList.filter((order: OrderClientType) => staff === order.staff);
     }
-    console.log(filtered);
     setOrdersListFiltered(filtered);
   };
 

@@ -1,8 +1,8 @@
-import { db } from "../../utils/prisma";
 import * as bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
+import { db } from "../../utils/prisma";
 
 const editUser = async (req: NextApiRequest, res: NextApiResponse) => {
   const prisma = new PrismaClient();

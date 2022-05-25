@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import Context from "../../components";
 import FormField from "../../components/EditFormField";
 
-import { EditUser, Inputs } from "../../types/types";
+import { EditUser } from "../../types/types";
 
 import styles from "../../styles/Register.module.css";
 import { PrismaClient } from "@prisma/client";

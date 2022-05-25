@@ -1,13 +1,14 @@
-import React, { MouseEventHandler, Ref, useEffect, useRef, useState } from "react";
+import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
 import useTranslation from "next-translate/useTranslation";
+import ClearIcon from "@mui/icons-material/Clear";
+import FilterAlt from "@mui/icons-material/FilterAlt";
 
 import Order from "./Order";
 
 import { OrderClientType, UserClientType } from "../types/types";
 
 import styles from "../styles/OrdersTable.module.css";
-import { FilterAlt } from "@mui/icons-material";
 
 interface Props {
   user: UserClientType,
@@ -48,30 +49,27 @@ const FilterWindow: NextPage<filterProps> = ({ user, children, orderUpdate }) =>
   }, [dropdownRef]);
 
   return (
-    <>{
-      user.admin && (
-        <>
-          <button onClick={() => setIsOpen(!isOpen)} className={styles.filterButton}>
-            <FilterAlt color="primary" />
-          </button>
-          {
-            isOpen && (
-              <div ref={dropdownRef} className={styles.filterDropdown}>
-                <div>
-                  {children}
-                </div>
-                <div className={styles.filterDropdownActions}>
-                  <button className={styles.filterDropdownButton} onClick={orderUpdate}>
-                    {t("filterButton")}
-                  </button>
-                </div>
+    user.admin ? (
+      <>
+        <button onClick={() => setIsOpen(!isOpen)} className={styles.filterButton}>
+          <FilterAlt color="primary" />
+        </button>
+        {
+          isOpen && (
+            <div ref={dropdownRef} className={styles.filterDropdown}>
+              <div>
+                {children}
               </div>
-            )
-          }
-        </>
-      )
-    }
-    </>
+              <div className={styles.filterDropdownActions}>
+                <button className={styles.filterDropdownButton} onClick={orderUpdate}>
+                  {t("filterButton")}
+                </button>
+              </div>
+            </div>
+          )
+        }
+      </>
+    ) : null
   );
 };
 
@@ -100,6 +98,14 @@ const OrdersTable: NextPage<Props> = ({ user, orders, orderUpdate, userNames, se
 
   const handleValues = () => {
     orderUpdate(currentDate, currentClient, currentService, currentStaff);
+  };
+
+  const handleClearFilters = () => {
+    setCurrentClient("");
+    setCurrentDate("");
+    setCurrentService("");
+    setCurrentStaff("");
+    orderUpdate("", "", "", "");
   };
 
   return (
@@ -170,7 +176,10 @@ const OrdersTable: NextPage<Props> = ({ user, orders, orderUpdate, userNames, se
           </th>
           <th className={`${styles.th}`}>
             {t("tableHeadActions")}
-          </th>
+            <button onClick={handleClearFilters} title={t("clearFilterButton")}>
+              <ClearIcon color="primary" />
+            </button>
+          </th> 
         </tr>
       </thead>
       <tbody>

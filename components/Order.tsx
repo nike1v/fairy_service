@@ -145,7 +145,6 @@ const Order: NextPage<Props> = ({ user, order }) => {
       <td className={`${styles.td}`}>
         {
           isEdit ? (
-            // <input className={styles.input}  type={"text"} value={staff} onChange={handleStaffChange} />
             <select name="staff" value={staff} onChange={handleStaffChange}>
               {
                 staffList.filter(({ job }: { job: string }) => job === order.service).map(({ id, name }: { id: number, name: string }) => (
