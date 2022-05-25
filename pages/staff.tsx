@@ -84,11 +84,13 @@ const Home: NextPage = () => {
           {
             filteredStaff.map((staff: staffInfoType) => (
               <Link href={staff.link} key={staff.name}>
-                <div className={styles.staffBox}>
-                  <Image src={staff.imageSrc} width={200} height={170} alt={staff.imageAlt} />
-                  {t(staff.name)}
-                  <br />
-                  {t(staff.job)}
+                <div className={styles.staffBoxContainer}>
+                  <div className={styles.staffBox}>
+                    <Image src={staff.imageSrc} width={200} height={170} alt={staff.imageAlt} />
+                    {t(staff.name)}
+                    <br />
+                    {t(staff.job)}
+                  </div>
                 </div>
               </Link>
             ))

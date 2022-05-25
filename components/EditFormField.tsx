@@ -4,7 +4,7 @@ import { ValidateResult, UseFormRegister, UseFormWatch } from "react-hook-form";
 import useTranslation from "next-translate/useTranslation";
 import { Translate } from "next-translate";
 
-import { EditUser, fieldName, Inputs, InputsErrors } from "../types/types";
+import { EditUser, fieldName, InputsErrors } from "../types/types";
 
 import styles from "../styles/FormField.module.css";
 

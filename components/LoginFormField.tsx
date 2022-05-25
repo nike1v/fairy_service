@@ -15,7 +15,7 @@ interface Props {
   watch: UseFormWatch<Inputs>
 }
 
-const registerOptions = (t: Translate, validate: any): {[k: string]: any} => ({
+const registerOptions = (t: Translate): {[k: string]: any} => ({
   email: {
     required: {
       value: true,
@@ -76,7 +76,7 @@ const FormField: NextPage<Props> = ({ fieldName, register, errors, watch }) => {
   return (
     <div className={styles.inputContainer}>
       <label className={`${styles.label} ${styles.required}`}>{t(`label${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`)}</label>
-      <input className={`${styles.input} ${errors[fieldName] && styles.error}`} placeholder={placeholder()} type={inputType()} {...register(fieldName, registerOptions(t, validate)[fieldName])} />
+      <input className={`${styles.input} ${errors[fieldName] && styles.error}`} placeholder={placeholder()} type={inputType()} {...register(fieldName, registerOptions(t)[fieldName])} />
       <ErrorMessage
         errors={errors}
         name={fieldName}

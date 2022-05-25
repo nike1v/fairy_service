@@ -1,7 +1,7 @@
-import { db } from "../../utils/prisma";
 import * as bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import { db } from "../../utils/prisma";
 
 const register = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {

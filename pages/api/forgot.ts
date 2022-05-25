@@ -1,6 +1,4 @@
-import { db } from "../../utils/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
-
 
 const forgotPassword = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {

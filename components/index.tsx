@@ -1,6 +1,8 @@
 import type { NextPage } from "next";
+
 import Header from "./Header";
 import Footer from "./Footer";
+
 import styles from "../styles/Home.module.css";
 
 interface Props {

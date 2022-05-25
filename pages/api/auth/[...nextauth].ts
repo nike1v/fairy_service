@@ -1,9 +1,10 @@
 import NextAuth, { NextAuthOptions, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { db } from "../../../utils/prisma";
 import * as bcrypt from "bcrypt";
 import { DefaultJWT } from "next-auth/jwt";
 import { NextApiRequest, NextApiResponse } from "next";
+
+import { db } from "../../../utils/prisma";
 
 import { UserAccountType } from "../../../types/types";
 
@@ -113,11 +114,11 @@ const configuration = {
       }
 
     },
-    async session({session, token, user}: Session) {
+    async session({ session, token }: Session) {
       session.accessToken = token.accessToken;
       return session;
     },
-    async jwt({ token, user, account, profile, isNewUser }: DefaultJWT) {
+    async jwt({ token, user }: DefaultJWT) {
       if (user) {
         token.user = user;
       }
