@@ -22,17 +22,17 @@ const Register: NextPage = () => {
   });
 
   const registerUser = async (data: Inputs) => {       
-    await axios.post("/api/register", data);
     try {
+      await axios.post("/api/register", data);
       const result: any = await signIn("credentials", {
-        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/cabinet?success=true`, redirect: true }
+        email: data.email, password: data.password, callbackUrl: "/cabinet?success=true", redirect: false }
       );
-
+      console.log({ registerResult: result });
       if (result) {
         router.push(result.url);
       }
     } catch (error: any) {
-      alert("Failed to register: " + error.toString());
+      throw new Error("Failed to register: " + error);
     }
   };
 

@@ -9,7 +9,7 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
       const hash = await bcrypt.hash(password, 0);
-      await db.clients.create({
+      const user = await db.clients.create({
         data: {
           firstName: firstName,
           lastName: lastName,
@@ -19,13 +19,14 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       });
 
-      return res.status(200).end();
+      res.status(200).json(user);
     } catch (error) {
-      return res.status(503).json({ error });
+      res.status(503).json({ error });
     }
   } else {
-    return res.status(405).end().json({error: "This request only supports POST requests"});
+    res.status(405).json({error: "This request only supports POST requests"});
   }
+  res.end();
 };
 
 export default register;
