@@ -26,7 +26,7 @@ type fieldName = "firstName" | "lastName" | "email" | "phone" | "password" | "co
 declare module "*.pdf";
 
 type UserAccountType = {
-	clientId: number;
+	id: number;
 	firstName?: string;
 	lastName?: string;
 	email?: string;
