@@ -2,7 +2,7 @@ import NextAuth, { User } from "next-auth";
 
 declare module "next-auth" {
   interface User {
-		clientId: number,
+		id: number,
 		firstName?: string | undefined,
 		lastName?: string | undefined,
 		email?: string | undefined,
@@ -13,7 +13,8 @@ declare module "next-auth" {
 
 	interface Session {
 		session: Session,
-		token: JWT
+		token: JWT,
+		user: User
 	}
 
 }

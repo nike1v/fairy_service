@@ -176,15 +176,18 @@ const OrdersTable: NextPage<Props> = ({ user, orders, orderUpdate, userNames, se
           </th>
           <th className={`${styles.th}`}>
             {t("tableHeadActions")}
+            {
+              user.admin && 
             <button onClick={handleClearFilters} title={t("clearFilterButton")}>
               <ClearIcon color="primary" />
             </button>
+            }
           </th> 
         </tr>
       </thead>
       <tbody>
         {
-          orders.map((order: OrderClientType) => <Order user={user} order={order} key={order.orderId} />)
+          orders.length > 0 && orders.map((order: OrderClientType) => <Order user={user} order={order} key={order.orderId} />)
         }
       </tbody>
     </table>

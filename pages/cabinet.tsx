@@ -1,108 +1,14 @@
-import type { NextApiRequest, NextPage } from "next";
+import type { NextPage } from "next";
 import useTranslation from "next-translate/useTranslation";
-import { getSession, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Context from "../components";
 import styles from "../styles/Cabinet.module.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { PrismaClient } from "@prisma/client";
 import { OrderClientType, OrdersType, UserClientType } from "../types/types";
 import Image from "next/image";
 import Link from "next/link";
 import OrdersTable from "../components/OrdersTable";
-
-export async function getStaticProps() {
-  const prisma = new PrismaClient();
-  const token = await getSession();
-  const user = await prisma.clients.findFirst({
-    where: {
-      email: token?.email as string | undefined,
-    },
-    select: {
-      clientId: true,
-      firstName: true,
-      phone: true,
-      email: true,
-      lastName: true,
-      admin: true
-    }
-  });
-
-  const orders = user?.admin ? await prisma.orders.findMany({
-    include: {
-      service: {
-        select: {
-          title: true
-        }
-      },
-      staff: {
-        select: {
-          firstName: true,
-        }
-      },
-      client: {
-        select: {
-          firstName: true,
-          lastName: true,
-          phone: true
-        }
-      }
-    },
-    orderBy: {
-      date: "desc"
-    }
-  }) : await prisma.orders.findMany({
-    where: {
-      clientId: user?.clientId
-    },
-    include: {
-      service: {
-        select: {
-          title: true
-        }
-      },
-      staff: {
-        select: {
-          firstName: true,
-        }
-      },
-      client: {
-        select: {
-          firstName: true,
-          lastName: true,
-          phone: true
-        }
-      }
-    },
-    orderBy: {
-      date: "desc"
-    }
-  });
-
-  const ordersFiltered = orders.map((order: OrdersType) => {
-    const dateConvert = new Date(order.date);
-    return ({
-      orderId: order.orderId,
-      date: dateConvert.toLocaleDateString(),
-      time: dateConvert.toLocaleTimeString(),
-      dateTime: dateConvert.toLocaleString(),
-      service: order.service.title,
-      staff: order.staff.firstName,
-      status: order.status,
-      client: {
-        name: order.client.lastName + " " + order.client.firstName,
-        phone: order.client.phone
-      }
-    });
-  });
-
-  return {
-    props: { 
-      user: user,
-      orders: ordersFiltered
-    },
-  };
-};
 
 const messages = {
   success: "Ви успішно зареєструвались!",
@@ -120,15 +26,16 @@ interface Props {
   orders: OrderClientType[]
 }
 
-const Home: NextPage<Props> = ({ user, orders }) => {
-  const { t, lang } = useTranslation("user");
-  const [ordersList, setOrdersList] = useState(orders);
-  const [ordersListFiltered, setOrdersListFiltered] = useState(orders);
+const Home: NextPage<Props> = () => {
+  const { t } = useTranslation("user");
+  const [ordersList, setOrdersList] = useState<OrderClientType[]>([] as OrderClientType[]);
+  const [user, setUser] = useState<UserClientType>({} as UserClientType);
+  const [ordersListFiltered, setOrdersListFiltered] = useState<OrderClientType[]>([]);
   const router = useRouter();
   const { data: session, status } = useSession();
-  const userNames = Array.from(new Set(orders.map((order: OrderClientType) => order.client.name)));
-  const services = Array.from(new Set(orders.map((order: OrderClientType) => order.service)));
-  const staffNames = Array.from(new Set(orders.map((order: OrderClientType) => order.staff)));
+  const userNames = Array.from(new Set(ordersList.map((order: OrderClientType) => order.client.name)));
+  const services = Array.from(new Set(ordersList.map((order: OrderClientType) => order.service)));
+  const staffNames = Array.from(new Set(ordersList.map((order: OrderClientType) => order.staff)));
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -136,9 +43,19 @@ const Home: NextPage<Props> = ({ user, orders }) => {
     }
   }, [status, router]);
 
+  useEffect(() => {
+    const getOrdersList = async () => {
+      const response = await(await fetch("/api/getOrders")).json();
+      const { user, orders } = response;
+      setUser(user);
+      setOrdersList(orders);
+      setOrdersListFiltered(orders);
+    };
+    getOrdersList();
+  }, []);
+
   const signOutButton = () => {
-    signOut({ redirect: false });
-    router.push("/");
+    signOut({ callbackUrl: "/", redirect: false });
   };
   
   const handleOrdersFilter = async (date: string, client: string, service: string, staff: string) => {
@@ -158,7 +75,7 @@ const Home: NextPage<Props> = ({ user, orders }) => {
     setOrdersListFiltered(filtered);
   };
 
-  return (
+  return user ? (
     <Context>
       <main className={styles.container}>
         {router.query.success && <ConfirmRegister message={router.query.success} />}
@@ -187,11 +104,14 @@ const Home: NextPage<Props> = ({ user, orders }) => {
             <span>
               {t("yourOrders")}
             </span>}
-            {orders && <OrdersTable orders={ordersListFiltered} user={user} orderUpdate={handleOrdersFilter} userNames={userNames} services={services} staffNames={staffNames} />}
+            <OrdersTable orders={ordersListFiltered} user={user} orderUpdate={handleOrdersFilter} userNames={userNames} services={services} staffNames={staffNames} />
           </div>    
         </div>
       </main>
+          
     </Context>
+  ) : (
+    null
   );
 };
 
