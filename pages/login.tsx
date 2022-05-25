@@ -33,7 +33,7 @@ const Login: NextPage = () => {
   const handleLogin = async (data: Inputs) => {
     try {
       const result: any = await signIn("credentials", {
-        email: data.email, password: data.password, callbackUrl: `${window.location.origin}/cabinet`, redirect: true }
+        email: data.email, password: data.password, callbackUrl: "/cabinet", redirect: false }
       );
       if (result.error) {
         if (result.status === 401) {
