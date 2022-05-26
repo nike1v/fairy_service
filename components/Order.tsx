@@ -188,7 +188,7 @@ const Order: NextPage<Props> = ({ user, order }) => {
         }
         {
           isEdit ?
-            <button onClick={() => handleCancelOrderDetails()} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
+            <button onClick={handleCancelOrderDetails} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
               <HighlightOffIcon />
             </button> :
             <button onClick={() => handleUpdateOrder(order.orderId, "abort")} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
