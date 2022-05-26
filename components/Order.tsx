@@ -48,26 +48,22 @@ const staffList = [
   }
 ];
 
-const updateOrder = async (orderId: number, options: string) => {
-  await axios.post("/api/orderUpdate", {
-    orderId,
-    options
-  });
-};
+const updateOrder = async (orderId: number, options: string) => await axios.post("/api/orderUpdate", {
+  orderId,
+  options
+});
 
-const editOrderData = async (data: { orderId: number, dateTime?: Date, staff?: number }) => {
-  return await axios.put("/api/orderDataUpdate", data);
-};
+const editOrderData = async (data: { orderId: number, dateTime?: Date, staff?: number }) => await axios.put("/api/orderDataUpdate", data);
 
 const Order: NextPage<Props> = ({ user, order }) => {
   const { t } = useTranslation("user");
   const [isEdit, setIsEdit] = useState(false);
-  const [date, setDate] = useState(new Date(order.dateTime).toISOString().substring(0,10));
-  const [time, setTime] = useState(new Date(order.dateTime).toISOString().substring(11,16));
-  const [staff, setStaff] = useState(order.staff);
-  const router = useRouter();
-	
-  const orderStatus = order.status === "work" ? t("statusWork") : order.status === "abort" ? t("statusAbort") : t("statusCompleted");
+  const [orderData, setOrderData] = useState(order);
+  const [date, setDate] = useState(new Date(orderData.dateTime).toISOString().substring(0,10));
+  const [time, setTime] = useState(new Date(orderData.dateTime).toISOString().substring(11,16));
+  const [staff, setStaff] = useState(orderData.staff);
+  const [orderStatus, setOrderStatus] = useState(orderData.status);
+  const [orderStatusText, setOrderStatusText] = useState(orderData.status === "work" ? `${t("statusWork")}` : orderData.status === "abort" ? `${t("statusAbort")}` : `${t("statusCompleted")}`);
 
   const handleEditButton = () => {
     setIsEdit(true);
@@ -75,21 +71,22 @@ const Order: NextPage<Props> = ({ user, order }) => {
 
   const handleCancelOrderDetails = () => {
     setIsEdit(false);
-    setDate(new Date(order.dateTime).toISOString().substring(0,10));
-    setTime(new Date(order.dateTime).toISOString().substring(11,16));
-    setStaff(order.staff);
+    setDate(new Date(orderData.dateTime).toISOString().substring(0,10));
+    setTime(new Date(orderData.dateTime).toISOString().substring(11,16));
+    setStaff(orderData.staff);
   };
 
   const handleUpdateOrder = async (orderId: number, options: string) => {
-    await updateOrder(orderId, options);
-    router.replace("/cabinet");
+    const result = await updateOrder(orderId, options);
+    setOrderStatus(result.data.status);
+    setOrderStatusText(result.data.status === "work" ? `${t("statusWork")}` : result.data.status === "abort" ? `${t("statusAbort")}` : `${t("statusCompleted")}`);
   };
 
   const saveOrderDetails = async (orderId: number, date?: string, time?: string, staff?: string) => {
     const dateTime = new Date(`${date}, ${time}`);
     const staffId = staffList.filter((staffDetail: { id: number, name: string }) => staffDetail.name === staff)[0].id;
-    await editOrderData({ orderId, dateTime, staff: staffId });
-    await router.push("/cabinet");
+    const result = await editOrderData({ orderId, dateTime, staff: staffId });
+    setOrderData(result.data);
     setIsEdit(false);
   };
 
@@ -106,13 +103,13 @@ const Order: NextPage<Props> = ({ user, order }) => {
   };
 
   return (
-    <tr key={order.orderId} className={`${order.status === "abort" ? styles.aborted : order.status === "completed" ? styles.completed : ""}`}>
+    <tr key={orderData.orderId} className={`${orderStatus === "abort" ? styles.aborted : orderStatus === "completed" ? styles.completed : ""}`}>
       <td className={`${styles.td}`}>
         {
           isEdit ? (
             <input className={styles.input} type={"date"} value={date} onChange={handleDateChange} />
           ) : (
-            order.date
+            orderData.date
           )
         }
       </td>
@@ -121,7 +118,7 @@ const Order: NextPage<Props> = ({ user, order }) => {
           isEdit ? (
             <input className={styles.input}  type={"time"} value={time} onChange={handleTimeChange} />
           ) : (
-            order.time
+            orderData.time
           )
         }
       </td>
@@ -129,10 +126,10 @@ const Order: NextPage<Props> = ({ user, order }) => {
         user.admin ? (
           <>
             <td className={`${styles.td}`}>
-              {order.client.name}
+              {orderData.client.name}
             </td>
             <td className={`${styles.td}`}>
-              {order.client.phone}
+              {orderData.client.phone}
             </td>
           </>
         ) : (
@@ -140,14 +137,14 @@ const Order: NextPage<Props> = ({ user, order }) => {
         )
       }
       <td className={`${styles.td}`}>
-        {order.service}
+        {orderData.service}
       </td>
       <td className={`${styles.td}`}>
         {
           isEdit ? (
             <select name="staff" value={staff} onChange={handleStaffChange}>
               {
-                staffList.filter(({ job }: { job: string }) => job === order.service).map(({ id, name }: { id: number, name: string }) => (
+                staffList.filter(({ job }: { job: string }) => job === orderData.service).map(({ id, name }: { id: number, name: string }) => (
                   <option value={name} key={id}>
                     {name}
                   </option>
@@ -155,12 +152,12 @@ const Order: NextPage<Props> = ({ user, order }) => {
               }
             </select>
           ) : (
-            order.staff
+            orderData.staff
           )
         }
       </td>
       <td className={`${styles.td}`}>
-        {orderStatus}
+        {orderStatusText}
       </td>
       <td className={`${styles.td}`}>
         {
@@ -168,16 +165,16 @@ const Order: NextPage<Props> = ({ user, order }) => {
             <>
               {
                 isEdit ?
-                  <button title={t("acceptOrderButton")} onClick={() => saveOrderDetails(order.orderId, date, time, staff)} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
+                  <button title={t("acceptOrderButton")} onClick={() => saveOrderDetails(orderData.orderId, date, time, staff)} className={`${orderStatus === "abort" && styles.abortButton || orderStatus === "completed" && styles.abortButton}`} disabled={orderStatus === "abort" || orderStatus === "completed"}>
                     <Done />
                   </button> :
-                  <button title={t("acceptOrderButton")} onClick={() => handleUpdateOrder(order.orderId, "completed")} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
+                  <button title={t("acceptOrderButton")} onClick={() => handleUpdateOrder(orderData.orderId, "completed")} className={`${orderStatus === "abort" && styles.abortButton || orderStatus === "completed" && styles.abortButton}`} disabled={orderStatus === "abort" || orderStatus === "completed"}>
                     <Done />
                   </button>
               }
               {
                 isEdit ? null :
-                  <button title={t("editOrderButton")} onClick={handleEditButton} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
+                  <button title={t("editOrderButton")} onClick={handleEditButton} className={`${orderStatus === "abort" && styles.abortButton || orderStatus === "completed" && styles.abortButton}`} disabled={orderStatus === "abort" || orderStatus === "completed"}>
                     <Edit />
                   </button>
               }
@@ -188,10 +185,10 @@ const Order: NextPage<Props> = ({ user, order }) => {
         }
         {
           isEdit ?
-            <button onClick={handleCancelOrderDetails} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
+            <button onClick={handleCancelOrderDetails} className={`${orderStatus === "abort" && styles.abortButton || orderStatus === "completed" && styles.abortButton}`} disabled={orderStatus === "abort" || orderStatus === "completed"}>
               <HighlightOffIcon />
             </button> :
-            <button onClick={() => handleUpdateOrder(order.orderId, "abort")} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
+            <button onClick={() => handleUpdateOrder(orderData.orderId, "abort")} className={`${orderStatus === "abort" && styles.abortButton || orderStatus === "completed" && styles.abortButton}`} disabled={orderStatus === "abort" || orderStatus === "completed"}>
               <HighlightOffIcon />
             </button>
         }
