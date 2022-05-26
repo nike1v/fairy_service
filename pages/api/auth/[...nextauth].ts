@@ -1,14 +1,12 @@
-import NextAuth, { NextAuthOptions, Session, User } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import * as bcrypt from "bcrypt";
-import { NextApiRequest, NextApiResponse } from "next";
 
-import { db } from "../../../utils/prisma";
+import { prisma } from "../../../utils/prisma";
 
 import { UserAccountType } from "../../../types/types";
 
 let userAccount: UserAccountType;
-const prisma = db;
 
 const confirmPasswordHash = (plainPassword: string, hashedPassword: string): Promise<boolean> => {
   return new Promise(resolve => {
