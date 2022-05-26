@@ -45,8 +45,8 @@ const Home: NextPage<Props> = () => {
 
   useEffect(() => {
     const getUserObject = async () => {
-      const user = await (await fetch("/api/getUser")).json();
       if (status === "authenticated") {
+        const user = await (await fetch("/api/getUser")).json();
         setUser(user.user);
       }
     };

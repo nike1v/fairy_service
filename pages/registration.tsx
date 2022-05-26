@@ -27,7 +27,7 @@ const Register: NextPage = () => {
       const result: any = await signIn("credentials", {
         email: data.email, password: data.password, callbackUrl: "/cabinet?success=true", redirect: false }
       );
-      console.log({ registerResult: result });
+
       if (result) {
         router.push(result.url);
       }
