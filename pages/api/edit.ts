@@ -1,11 +1,9 @@
 import * as bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
 
-import { db } from "../../utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 const editUser = async (req: NextApiRequest, res: NextApiResponse) => {
-  const prisma = new PrismaClient();
   const { firstName, lastName, email, password, phone, clientId } = req.body;
 
   try {
@@ -18,7 +16,7 @@ const editUser = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "PUT") {
       const hash = await bcrypt.hash(password, 0);
       try {
-        await db.clients.update({
+        await prisma.clients.update({
           where: {
             clientId: +clientId
           },

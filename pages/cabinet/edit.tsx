@@ -7,18 +7,19 @@ import { useRouter } from "next/router";
 import Context from "../../components";
 import FormField from "../../components/EditFormField";
 
+import { getToken, JWT } from "next-auth/jwt";
+
+import { prisma } from "../../utils/prisma";
+
 import { EditUser } from "../../types/types";
 
 import styles from "../../styles/Register.module.css";
-import { PrismaClient } from "@prisma/client";
-import { getToken, JWT } from "next-auth/jwt";
 
 interface Props {
 	value: EditUser,
 };
 
 export async function getServerSideProps({ req }: { req: NextApiRequest }) {
-  const prisma = new PrismaClient();
   const token: null | JWT = await getToken({
     req,
     secret: process.env.NEXT_JWT_SECRET,
