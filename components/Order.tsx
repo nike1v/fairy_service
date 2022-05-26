@@ -82,7 +82,7 @@ const Order: NextPage<Props> = ({ user, order }) => {
 
   const handleUpdateOrder = async (orderId: number, options: string) => {
     await updateOrder(orderId, options);
-    router.push("/cabinet");	
+    router.push("/cabinet");
   };
 
   const saveOrderDetails = async (orderId: number, date?: string, time?: string, staff?: string) => {
@@ -166,9 +166,15 @@ const Order: NextPage<Props> = ({ user, order }) => {
         {
           user.admin ? (
             <>
-              <button title={t("acceptOrderButton")} onClick={() => isEdit ? saveOrderDetails(order.orderId, date, time, staff) : handleUpdateOrder(order.orderId, "completed")} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
-                <Done />
-              </button>
+              {
+                isEdit ?
+                  <button title={t("acceptOrderButton")} onClick={() => saveOrderDetails(order.orderId, date, time, staff)} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
+                    <Done />
+                  </button> :
+                  <button title={t("acceptOrderButton")} onClick={() => handleUpdateOrder(order.orderId, "completed")} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
+                    <Done />
+                  </button>
+              }
               {
                 isEdit ? null :
                   <button title={t("editOrderButton")} onClick={handleEditButton} className={`${order.status === "abort" && styles.abortButton || order.status === "completed" && styles.abortButton}`} disabled={order.status === "abort" || order.status === "completed"}>
