@@ -30,7 +30,7 @@ const Home: NextPage<Props> = () => {
   const { t } = useTranslation("user");
   const [ordersList, setOrdersList] = useState<OrderClientType[]>([] as OrderClientType[]);
   const { data: session, status } = useSession();
-  const [user, setUser] = useState<UserClientType>({} as UserClientType);
+  const [user, setUser] = useState<UserClientType>();
   const [ordersListFiltered, setOrdersListFiltered] = useState<OrderClientType[]>([]);
   const router = useRouter();
   const userNames = Array.from(new Set(ordersList.map((order: OrderClientType) => order.client.name)));
@@ -44,10 +44,14 @@ const Home: NextPage<Props> = () => {
   }, [status, router]);
 
   useEffect(() => {
-    if (status === "authenticated") {
-      setUser(session?.user as UserClientType);
-    }
-  }, [session, status]);
+    const getUserObject = async () => {
+      const user = await (await fetch("/api/getUser")).json();
+      if (status === "authenticated") {
+        setUser(user.user);
+      }
+    };
+    getUserObject();
+  }, [status]);
 
   useEffect(() => {
     const getOrdersList = async () => {

@@ -31,15 +31,17 @@ const editUser = async (req: NextApiRequest, res: NextApiResponse) => {
           }
         });
 
-        return res.status(200).end();
+        res.status(200);
       } catch (error) {
-        return res.status(503).json({ error });
+        res.status(503).json({ error });
       }
     } else {
-      return res.status(405).end().json({error: "This request only supports PUT requests"});
+      res.status(405).json({error: "This request only supports PUT requests"});
     }
   } catch {
     console.log("error");
+  } finally {
+    res.end();
   }
 };
 
