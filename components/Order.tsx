@@ -82,7 +82,7 @@ const Order: NextPage<Props> = ({ user, order }) => {
 
   const handleUpdateOrder = async (orderId: number, options: string) => {
     await updateOrder(orderId, options);
-    router.push("/cabinet");
+    router.replace("/cabinet");
   };
 
   const saveOrderDetails = async (orderId: number, date?: string, time?: string, staff?: string) => {
